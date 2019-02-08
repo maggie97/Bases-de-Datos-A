@@ -92,7 +92,7 @@ namespace Archivos
             else
             {
                 ent = ddd.EntidadesOrden.Find(o => o.sNombre.Contains(lblEntidad.Text));
-                VistaRegistros ventanaReg = new VistaRegistros(ent);
+                VistaRegistros ventanaReg = new VistaRegistros(ent, ddd.Fullname);
                 ventanaReg.actualizado += new VistaRegistros.Actualiza(actualizaEnt);
                 ventanaReg.actualizado += new VistaRegistros.Actualiza(ddd.sobreescribe_archivo);
                 ventanaReg.Show();

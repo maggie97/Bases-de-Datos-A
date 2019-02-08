@@ -31,12 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Entidades = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevaEntidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eliminaEntidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Atributos = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +63,11 @@
             this.pTituloAtrib = new System.Windows.Forms.Panel();
             this.lblEntidad = new System.Windows.Forms.Label();
             this.lbltextoA = new System.Windows.Forms.Label();
+            this.nuevoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificarBDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eliminarBDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevaEntidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pEntidades.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgEntidades)).BeginInit();
@@ -93,41 +95,24 @@
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nuevoToolStripMenuItem,
             this.abrirToolStripMenuItem,
+            this.modificarBDToolStripMenuItem,
+            this.eliminarBDToolStripMenuItem,
             this.toolStripSeparator,
             this.salirToolStripMenuItem});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.archivoToolStripMenuItem.Text = "&Archivo";
             // 
-            // nuevoToolStripMenuItem
-            // 
-            this.nuevoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("nuevoToolStripMenuItem.Image")));
-            this.nuevoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
-            this.nuevoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nuevoToolStripMenuItem.Text = "&Nuevo";
-            this.nuevoToolStripMenuItem.Click += new System.EventHandler(this.nuevoToolStripMenuItem_Click);
-            // 
-            // abrirToolStripMenuItem
-            // 
-            this.abrirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("abrirToolStripMenuItem.Image")));
-            this.abrirToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
-            this.abrirToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.abrirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.abrirToolStripMenuItem.Text = "&Abrir";
-            this.abrirToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
-            // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(224, 6);
             // 
             // salirToolStripMenuItem
             // 
+            this.salirToolStripMenuItem.Image = global::Archivos.Properties.Resources.icons8_edit_48__1_;
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
             this.salirToolStripMenuItem.Text = "&Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -139,13 +124,6 @@
             this.btn_Entidades.Name = "btn_Entidades";
             this.btn_Entidades.Size = new System.Drawing.Size(73, 20);
             this.btn_Entidades.Text = "Entidades ";
-            // 
-            // nuevaEntidadToolStripMenuItem
-            // 
-            this.nuevaEntidadToolStripMenuItem.Name = "nuevaEntidadToolStripMenuItem";
-            this.nuevaEntidadToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.nuevaEntidadToolStripMenuItem.Text = "Nueva Entidad";
-            this.nuevaEntidadToolStripMenuItem.Click += new System.EventHandler(this.nuevaEntidadToolStripMenuItem_Click);
             // 
             // eliminaEntidadToolStripMenuItem
             // 
@@ -405,6 +383,47 @@
             this.lbltextoA.Text = "Atributos de ";
             this.lbltextoA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // nuevoToolStripMenuItem
+            // 
+            this.nuevoToolStripMenuItem.Image = global::Archivos.Properties.Resources.icons8_new_job_48;
+            this.nuevoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
+            this.nuevoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.nuevoToolStripMenuItem.Text = "&Nueva Base de Datos";
+            this.nuevoToolStripMenuItem.Click += new System.EventHandler(this.nuevoToolStripMenuItem_Click);
+            // 
+            // abrirToolStripMenuItem
+            // 
+            this.abrirToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("abrirToolStripMenuItem.Image")));
+            this.abrirToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
+            this.abrirToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.abrirToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.abrirToolStripMenuItem.Text = "&Abrir";
+            this.abrirToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
+            // 
+            // modificarBDToolStripMenuItem
+            // 
+            this.modificarBDToolStripMenuItem.Name = "modificarBDToolStripMenuItem";
+            this.modificarBDToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.modificarBDToolStripMenuItem.Text = "Modificar BD";
+            // 
+            // eliminarBDToolStripMenuItem
+            // 
+            this.eliminarBDToolStripMenuItem.Image = global::Archivos.Properties.Resources.icons8_new_job_48__2_;
+            this.eliminarBDToolStripMenuItem.Name = "eliminarBDToolStripMenuItem";
+            this.eliminarBDToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.eliminarBDToolStripMenuItem.Text = "Eliminar BD";
+            // 
+            // nuevaEntidadToolStripMenuItem
+            // 
+            this.nuevaEntidadToolStripMenuItem.Image = global::Archivos.Properties.Resources.icons8_new_file_48;
+            this.nuevaEntidadToolStripMenuItem.Name = "nuevaEntidadToolStripMenuItem";
+            this.nuevaEntidadToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.nuevaEntidadToolStripMenuItem.Text = "Nueva Entidad";
+            this.nuevaEntidadToolStripMenuItem.Click += new System.EventHandler(this.nuevaEntidadToolStripMenuItem_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -473,6 +492,8 @@
         private System.Windows.Forms.Label lbltextoA;
         private System.Windows.Forms.Label lblEntidad;
         private System.Windows.Forms.ToolStripMenuItem btn_Registro;
+        private System.Windows.Forms.ToolStripMenuItem modificarBDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eliminarBDToolStripMenuItem;
     }
 }
 

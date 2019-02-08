@@ -16,12 +16,12 @@ namespace Archivos
         public delegate void Actualiza();
         Entidad entidad;
         ArchivoRegistros archivo;
-        public VistaRegistros(Entidad e)
+        public VistaRegistros(Entidad e, string dir)
         {
             InitializeComponent();
             
             entidad = e;
-            archivo = new ArchivoRegistros(entidad.sNombre + ".dat", entidad);
+            archivo = new ArchivoRegistros(dir, entidad);
 
             //define las columnas del datagried de los registros 
             dgVReg.Columns.Add("dir_Reg", "Direccion del registro");
