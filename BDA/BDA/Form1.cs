@@ -12,10 +12,10 @@ namespace BDA
 {
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
             InitializeComponent();
-            ///Bunifu_classes.Round.ActivateForm(this, 20);
         }
 
         private void panel_Paint(object sender, PaintEventArgs e)
@@ -37,10 +37,9 @@ namespace BDA
         {
 
         }
-
         private void bunifuImageButton1_Click(object sender, EventArgs e)
         {
-
+            abrirDD();
         }
 
         private void bunifuImageButton4_Click(object sender, EventArgs e)
@@ -64,12 +63,53 @@ namespace BDA
         /// </summary>
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (treeView1.SelectedNode != null)
+            if (treeViewBD.SelectedNode != null)
             {
-                if (treeView1.SelectedNode.Level == 0)
+                if (treeViewBD.SelectedNode.Level == 0)
                 {
                     //
                 }
+            }
+        }
+
+
+        #region
+        private void abrirDD()
+        {
+            using (OpenFileDialog open = new OpenFileDialog())
+            {
+                open.Filter = "Diccionario de Datos (*.dd)| *.dd";
+                ///open.InitialDirectory = Directory.GetParent(ddd.Fullname).ToString();
+                open.Title = "Seleciona un Diccionario de datos";
+                if (open.ShowDialog() == DialogResult.OK)
+                {
+
+
+                }
+            }
+        }
+        #endregion
+
+        private void bunifuImageButton6_Click(object sender, EventArgs e)
+        {
+            if (WindowState != FormWindowState.Maximized)
+                WindowState = FormWindowState.Maximized;
+            else
+                WindowState = FormWindowState.Normal;
+        }
+
+        private void bunifuFlatButton2_MouseDown(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void menuArchivo_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left)
+            {
+                menuArchivo.ContextMenuStrip = contextArchivo;
+                
+                menuArchivo.ContextMenuStrip.Show(menuArchivo, 0, menuArchivo.Bottom);
             }
         }
     }
