@@ -31,3 +31,4 @@ C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\Interop.MSComctlLib.d
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\AxInterop.ComctlLib.dll
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\AxInterop.MSComctlLib.dll
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.csproj.ResolveComReference.cache
+C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.nuevoArchivo.resources
