@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -52,20 +53,34 @@ namespace BDA
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     Path = open.FileName;
-                    Path.Substring(0, Path.LastIndexOf('\''));
-                    DirectoryInfo directory = new DirectoryInfo(Path);
-                    DirectoryInfo[] directories = directory.GetDirectories();
+                    Path = Path.Substring(0, Path.LastIndexOf('\\'));
+                    string n = Path.Substring(Path.LastIndexOf('\\') + 1);
 
-                    foreach (FileInfo file in directory.GetFiles())
-                    {
-                        if (file.Exists)
-                        {
-                            TreeNode nodes = treeViewBD.Nodes[0].Nodes.Add(file.Name);
-                        }
-                    }
-
+                    creArbol(n);
                 }
             }
+        }
+        private void creArbol( string nomb)
+        {
+            treeViewBD.Nodes.Clear();
+
+            DirectoryInfo directory = new DirectoryInfo(Path);
+            DirectoryInfo[] directories = directory.GetDirectories();
+
+            TreeNode root = new TreeNode(nomb);
+            root.ContextMenuStrip = contextItemTree;
+            foreach (FileInfo file in directory.GetFiles())
+            {
+                if (file.Exists && file.Name.Substring(file.Name.IndexOf('.')+1) != "dd")
+                {
+                    TreeNode node = new TreeNode(file.Name);
+                    node.ContextMenuStrip = contextTabla;
+                    root.Nodes.Add(node);
+                }
+            }
+            List<TreeNode> tree = new List<TreeNode>();
+            tree.Add(root);
+            treeViewBD.Nodes.AddRange(tree.ToArray());
         }
         private void nuevoDD()
         {
@@ -87,15 +102,7 @@ namespace BDA
                             btn_Registro.Enabled = true;*/
 
                             /**/
-                            DirectoryInfo[] directories = directory.GetDirectories();
-
-                            foreach (FileInfo file in directory.GetFiles())
-                            {
-                                if (file.Exists)
-                                {
-                                    TreeNode nodes = treeViewBD.Nodes[0].Nodes.Add(file.Name);
-                                }
-                            }
+                            creArbol(n.name);
                         }
                     }
                     else
@@ -145,7 +152,15 @@ namespace BDA
         {
             if (Directory.Exists(Path))
             {
-                Directory.Delete(Path);
+                //eliminar los arcchivos de la carpeta 
+                DirectoryInfo directory = new DirectoryInfo(Path);
+
+                foreach (FileInfo file in directory.GetFiles())
+                {
+                    file.Delete();
+                }
+                // eliminar la carpeta (sin archivos)
+                Directory.Delete(Path); 
             }
         }
 
