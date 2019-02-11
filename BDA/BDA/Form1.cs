@@ -8,6 +8,7 @@ namespace BDA
     public partial class Form1 : Form
     {
         private string Path;
+        private string nombreBD;
         public Form1()
         {
             InitializeComponent();
@@ -62,16 +63,37 @@ namespace BDA
         }
         private void creArbol( string nomb)
         {
+            nombreBD = nomb;
             treeViewBD.Nodes.Clear();
-
+            if (!Directory.Exists(Path)) return;
             DirectoryInfo directory = new DirectoryInfo(Path);
-            DirectoryInfo[] directories = directory.GetDirectories();
-
+            
             TreeNode root = new TreeNode(nomb);
-            root.ContextMenuStrip = contextItemTree;
+            root.ContextMenuStrip = contextItem;
             foreach (FileInfo file in directory.GetFiles())
             {
                 if (file.Exists && file.Name.Substring(file.Name.IndexOf('.')+1) != "dd")
+                {
+                    TreeNode node = new TreeNode(file.Name);
+                    node.ContextMenuStrip = contextTabla;
+                    root.Nodes.Add(node);
+                }
+            }
+            List<TreeNode> tree = new List<TreeNode>();
+            tree.Add(root);
+            treeViewBD.Nodes.AddRange(tree.ToArray());
+        }
+        private void creArbol()
+        {
+            treeViewBD.Nodes.Clear();
+            if (!Directory.Exists(Path)) return;
+            DirectoryInfo directory = new DirectoryInfo(Path);
+
+            TreeNode root = new TreeNode(nombreBD);
+            root.ContextMenuStrip = contextItem;
+            foreach (FileInfo file in directory.GetFiles())
+            {
+                if (file.Exists && file.Name.Substring(file.Name.IndexOf('.') + 1) != "dd")
                 {
                     TreeNode node = new TreeNode(file.Name);
                     node.ContextMenuStrip = contextTabla;
@@ -146,27 +168,46 @@ namespace BDA
             nuevoDD();
         }
         
-       
-
         private void eliminarBDToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Directory.Exists(Path))
             {
                 //eliminar los arcchivos de la carpeta 
                 DirectoryInfo directory = new DirectoryInfo(Path);
-
                 foreach (FileInfo file in directory.GetFiles())
                 {
                     file.Delete();
                 }
                 // eliminar la carpeta (sin archivos)
-                Directory.Delete(Path); 
+                Directory.Delete(Path);
+                creArbol();
             }
         }
 
         private void bunifuImageButton7_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        private void cambiarNombreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string aux = Path.Substring(0, Path.LastIndexOf('\\'));
+            string res = Microsoft.VisualBasic.Interaction.InputBox("Nombre de la BD", "Cambiar nombre", nombreBD);
+
+
+            File.Move(Path + '\\' + nombreBD + ".dd", Path + '\\' + res + ".dd");
+            Directory.Move(Path , aux + '\\'+ res);
+            
+            Path = aux + '\\' + res;
+            nombreBD = res;
+
+            
+            creArbol();
+        }
+
+        private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
