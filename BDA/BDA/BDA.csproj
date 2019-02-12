@@ -96,6 +96,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="NuevaEntidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevaEntidad.designer.cs">
+      <DependentUpon>NuevaEntidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="nuevoArchivo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevaEntidad.resx">
+      <DependentUpon>NuevaEntidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="nuevoArchivo.resx">
       <DependentUpon>nuevoArchivo.cs</DependentUpon>

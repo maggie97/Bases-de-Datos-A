@@ -9,6 +9,9 @@ namespace BDA
     {
         private string Path;
         private string nombreBD;
+
+
+        DDD ddd;
         public Form1()
         {
             InitializeComponent();
@@ -53,6 +56,8 @@ namespace BDA
                 open.Title = "Seleciona un Diccionario de datos";
                 if (open.ShowDialog() == DialogResult.OK)
                 {
+                    ddd = new DDD(open.FileName);
+                    ddd.lee();
                     Path = open.FileName;
                     Path = Path.Substring(0, Path.LastIndexOf('\\'));
                     string n = Path.Substring(Path.LastIndexOf('\\') + 1);
@@ -114,7 +119,7 @@ namespace BDA
                     if (!Directory.Exists(Path))
                     {
                         DirectoryInfo directory = System.IO.Directory.CreateDirectory(Path);
-                        DDD ddd = new DDD(n.name, ".dd", Path);
+                        ddd = new DDD(n.name, ".dd", Path);
                         using (BinaryWriter writer = new BinaryWriter(File.Open(ddd.Fullname, FileMode.Create)))
                         {
                             writer.Write(ddd.Cab);
@@ -206,6 +211,21 @@ namespace BDA
         }
 
         private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NuevaEntidad nueva = new NuevaEntidad();
+            if(nueva.ShowDialog() == DialogResult.OK)
+            {
+                if (!File.Exists(Path + '\\' + nueva.Nombre_Entidad + ".dat"))
+                {
+                    ddd.nuevaEntidad(nueva.Nombre_Entidad);
+                    ddd.sobreescribe_archivo();
+                    Archivo n = new Archivo(  nueva.Nombre_Entidad, ".dat", Path );
+                    creArbol();
+                }
+            }
+        }
+
+        private void nuevoAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
