@@ -202,11 +202,13 @@ namespace BDA
 
             File.Move(Path + '\\' + nombreBD + ".dd", Path + '\\' + res + ".dd");
             Directory.Move(Path , aux + '\\'+ res);
+
             
             Path = aux + '\\' + res;
             nombreBD = res;
 
-            
+            ddd.Fullname = Path + '\\' + nombreBD + ".dd";
+
             creArbol();
         }
 
