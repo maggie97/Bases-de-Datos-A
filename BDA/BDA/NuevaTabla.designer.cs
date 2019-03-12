@@ -1,6 +1,6 @@
 ﻿namespace BDA
 {
-    partial class NuevaEntidad
+    partial class NuevaTabla
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             this.btn_Cancelar.Text = "Cancelar";
             this.btn_Cancelar.UseVisualStyleBackColor = true;
             // 
-            // NuevaEntidad
+            // NuevaTabla
             // 
             this.AcceptButton = this.btn_Aceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -81,8 +81,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_Aceptar);
             this.Controls.Add(this.btn_Cancelar);
-            this.Name = "NuevaEntidad";
-            this.Text = "NuevaEntidad";
+            this.Name = "NuevaTabla";
+            this.Text = "Nueva Tabla";
             this.Load += new System.EventHandler(this.NuevaEntidad_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

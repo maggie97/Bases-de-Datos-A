@@ -82,11 +82,14 @@ namespace BDA
                     TreeNode node = new TreeNode(file.Name);
                     node.ContextMenuStrip = contextTabla;
                     root.Nodes.Add(node);
+                    node.ImageIndex = node.Level;
+                    node.SelectedImageIndex = node.Level;
                 }
             }
             List<TreeNode> tree = new List<TreeNode>();
             tree.Add(root);
             treeViewBD.Nodes.AddRange(tree.ToArray());
+            treeViewBD.ExpandAll();
         }
         private void creArbol()
         {
@@ -102,7 +105,9 @@ namespace BDA
                 {
                     TreeNode node = new TreeNode(file.Name);
                     node.ContextMenuStrip = contextTabla;
+                    
                     root.Nodes.Add(node);
+                    
                 }
             }
             List<TreeNode> tree = new List<TreeNode>();
@@ -147,20 +152,6 @@ namespace BDA
                 WindowState = FormWindowState.Maximized;
             else
                 WindowState = FormWindowState.Normal;
-        }
-        
-
-        private void menuArchivo_MouseClick(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Left)
-            {
-                menuArchivo.ContextMenuStrip = contextArchivo;
-                menuArchivo.ContextMenuStrip.Show(menuArchivo, 0, menuArchivo.Bottom);
-            }
-            else
-            {
-                menuArchivo.ContextMenuStrip = null;
-            }
         }
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -214,7 +205,7 @@ namespace BDA
 
         private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NuevaEntidad nueva = new NuevaEntidad();
+            NuevaTabla nueva = new NuevaTabla();
             if(nueva.ShowDialog() == DialogResult.OK)
             {
                 if (!File.Exists(Path + '\\' + nueva.Nombre_Entidad + ".dat"))
@@ -225,6 +216,15 @@ namespace BDA
                     creArbol();
                 }
             }
+        }
+
+        private void treeViewBD_MouseClick(object sender, MouseEventArgs e)
+        {
+           
+        }
+
+        private void treeViewBD_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
         }
 
         private void nuevoAtributoToolStripMenuItem_Click(object sender, EventArgs e)

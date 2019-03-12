@@ -96,11 +96,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="NuevaEntidad.cs">
+    <Compile Include="NuevaTabla.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NuevaEntidad.designer.cs">
-      <DependentUpon>NuevaEntidad.cs</DependentUpon>
+    <Compile Include="NuevaTabla.designer.cs">
+      <DependentUpon>NuevaTabla.cs</DependentUpon>
     </Compile>
     <Compile Include="nuevoArchivo.cs">
       <SubType>Form</SubType>
@@ -108,16 +108,25 @@
     <Compile Include="nuevoArchivo.designer.cs">
       <DependentUpon>nuevoArchivo.cs</DependentUpon>
     </Compile>
+    <Compile Include="NuevoAtributo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevoAtributo.designer.cs">
+      <DependentUpon>NuevoAtributo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NuevaEntidad.resx">
-      <DependentUpon>NuevaEntidad.cs</DependentUpon>
+    <EmbeddedResource Include="NuevaTabla.resx">
+      <DependentUpon>NuevaTabla.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="nuevoArchivo.resx">
       <DependentUpon>nuevoArchivo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevoAtributo.resx">
+      <DependentUpon>NuevoAtributo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace BDA
 {
-    public partial class NuevaEntidad : Form
+    public partial class NuevaTabla : Form
     {
 
-        public NuevaEntidad()
+        public NuevaTabla()
         {
             InitializeComponent();
         }
