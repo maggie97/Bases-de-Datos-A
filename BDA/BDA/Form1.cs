@@ -9,7 +9,7 @@ namespace BDA
     {
         private string Path;
         private string nombreBD;
-
+        
 
         DDD ddd;
         public Form1()
@@ -229,7 +229,11 @@ namespace BDA
 
         private void nuevoAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            NuevoAtributo nuevo = new NuevoAtributo(ddd.EntidadesOrden);
+            if(nuevo.ShowDialog() == DialogResult.OK)
+            {
 
+            }
         }
     }
 }
