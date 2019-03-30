@@ -93,6 +93,7 @@ namespace BDA
                     if (e.Dir_Entidad == dir)
                     {
                         list_entidades.Add(e);
+                        e.Indice(1);
                         dir = e.Dir_sig;
                     }
                 }
@@ -278,17 +279,16 @@ namespace BDA
             }
         }
         #region atributos
-        public Entidad nuevoAtributo(string nombre, int tipo, int longi, int iEnt, int TipoIndice)
+        public void nuevoAtributo(string nombre, int tipo, int longi,Entidad e, int TipoIndice)
         { 
             Atributo nuevo = new Atributo(nombre, Longitud, tipo, longi, TipoIndice, -1, -1);
-            list_entidades[iEnt].nuevoA(nuevo);
+            e.nuevoA(nuevo);
             //guardaAtrib(nuevo);
             obj.Add(nuevo);
             ordena();
             sobreescribe_archivo();
             //sobreescribEntidades();
             //sobreescribAtributos(list_entidades[iEnt]);
-            return list_entidades[iEnt];
         }
         public void guardaAtrib(Atributo a)
         {

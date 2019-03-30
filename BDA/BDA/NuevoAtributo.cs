@@ -12,15 +12,33 @@ namespace BDA
 {
     public partial class NuevoAtributo : Form
     {
-        
+        public class Clave
+        {
+            int tipo;
+            string nombre;
+
+            public Clave(string nombre, int tipo)
+            {
+                Nombre = nombre;
+                Tipo = tipo;
+            }
+
+            public string Nombre { get => nombre; set => nombre = value; }
+            public int Tipo { get => tipo; set => tipo = value; }
+        }
         public NuevoAtributo(Entidad entidades)
         {
             InitializeComponent();
-            
+            entidades.Indice(0);
             num_Long.Text = "4";
-            cmbIndice.SelectedIndex = 0;
+            
             lblEntidad.Text = entidades.sNombre;
             cmbTipo.Items.AddRange(new object[] {"int", "float", "char" });
+            if(entidades.Prim == null)
+                cmbIndice.Items.AddRange(new object[] {"Sin Llave", "Llave Primaria", "Llave Foranea" });
+            else
+                cmbIndice.Items.AddRange(new object[] { "Sin Llave", "Llave Foranea" });
+            cmbIndice.SelectedIndex = 0;
             cmbTipo.SelectedIndex = 0;
         }
         /*
@@ -41,7 +59,22 @@ namespace BDA
         public int Long { get => Convert.ToInt32(num_Long.Text); }
         public int Tipo { get => cmbTipo.SelectedIndex; }
 
-        public int TipoIndex { get => cmbIndice.SelectedIndex; }
+        public int TipoIndex {
+            get {
+                string s = (string)cmbIndice.SelectedItem;
+                int i = 0;
+                switch (s)
+                {
+                    case "Llave Primaria":
+                        i = 2;
+                        break;
+                    case "Llave Foranea":
+                        i = 3;
+                        break;
+                }
+                return i;
+            }
+        }
 
         private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {

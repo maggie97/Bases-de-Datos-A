@@ -20,13 +20,14 @@ namespace BDA
             if (!File.Exists(fullname) || e.Dir_Datos == -1)
             {
                 nuevoArch();
-                indices();
+               
             }
             else
             {
                 leerArch(e.Dir_Datos);
-                indices();
+                
             }
+            indices();
         }
 
         public void indices()

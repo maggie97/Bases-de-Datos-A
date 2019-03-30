@@ -24,7 +24,7 @@ namespace Archivos
 
 
             VistaIndice = new VistaIndice(E);
-            VistReg = new VistaRegistros(E);
+            //VistReg = new VistaRegistros(E, E.Dir_Datos);
             //VistReg.actualizado += new VistaRegistros.Actualiza(actualizaEnt);
             //VistReg.actualizado += new VistaRegistros.Actualiza(ddd.sobreescribe_archivo);
             VistReg.Show();

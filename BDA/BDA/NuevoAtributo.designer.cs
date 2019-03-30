@@ -113,14 +113,6 @@
             // cmbIndice
             // 
             this.cmbIndice.FormattingEnabled = true;
-            this.cmbIndice.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cmbIndice.Location = new System.Drawing.Point(156, 158);
             this.cmbIndice.Name = "cmbIndice";
             this.cmbIndice.Size = new System.Drawing.Size(257, 21);
@@ -156,10 +148,10 @@
             this.lblEntidad.TabIndex = 15;
             this.lblEntidad.Text = "<Entidad>";
             // 
-            // txt_Long
+            // num_Long
             // 
             this.num_Long.Location = new System.Drawing.Point(156, 133);
-            this.num_Long.Name = "txt_Long";
+            this.num_Long.Name = "num_Long";
             this.num_Long.Size = new System.Drawing.Size(257, 20);
             this.num_Long.TabIndex = 16;
             // 

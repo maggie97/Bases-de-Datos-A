@@ -86,7 +86,6 @@
     <Compile Include="Controladores\Cajon_Secundario.cs" />
     <Compile Include="Controladores\DDD.cs" />
     <Compile Include="Controladores\Entidad.cs" />
-    <Compile Include="Controladores\HashDinamico.cs" />
     <Compile Include="Controladores\Indice.cs" />
     <Compile Include="Controladores\Primario.cs" />
     <Compile Include="Controladores\Secundario.cs" />

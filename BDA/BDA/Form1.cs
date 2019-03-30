@@ -303,13 +303,14 @@ namespace BDA
             if (nuevo.ShowDialog() == DialogResult.OK)
             {
                 long dir = -1;
-
-                Atributo atrib = new Atributo(nuevo.Nombre_atributo, ddd.Longitud, nuevo.Tipo, nuevo.Long, nuevo.TipoIndex, -1, -1);
-                ddd.EntidadesOrden[i].nuevoA(atrib);
-                ddd.guardaAtrib(atrib);
-                ddd.sobreescribe_archivo();
-                ddd.ordena();
+                ddd.nuevoAtributo(nuevo.Nombre_atributo, nuevo.Tipo, nuevo.Long, ent, nuevo.TipoIndex);
+                //Atributo atrib = new Atributo(nuevo.Nombre_atributo, ddd.Longitud, nuevo.Tipo, nuevo.Long, nuevo.TipoIndex, -1, -1);
+                //ddd.EntidadesOrden[i].nuevoA(atrib);
+                //ddd.guardaAtrib(atrib);
+                //ddd.sobreescribe_archivo();
+                //ddd.ordena();
                 vr.VerTabla(ent);
+                creArbol();
             }
         }
 

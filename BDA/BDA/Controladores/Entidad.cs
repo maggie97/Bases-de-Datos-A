@@ -110,12 +110,6 @@ namespace BDA
                     s.insertaEscribe(atributos[s.index + 1], Convert.ToInt64(atributos[0]));
                 }
             }
-            Atributo a = atrib.Find(o => o.TipoIndice == 6);
-            if (a != null && a.DirAtributo != -1)
-            {
-                HashDinamico h = (HashDinamico)a.Ind;
-                h.inserta(atributos[h.index + 1], Convert.ToInt64(atributos[0]));
-            }
             ordenaReg();
         }
         public void Indice(int op)
@@ -144,13 +138,6 @@ namespace BDA
                         a.Ind = new Secundario(a, sNombre, Atrib.IndexOf(a));
                 }
                 sec.Add((Secundario)a.Ind);
-            }
-            if((a = Atrib.Find(o => o.TipoIndice == 6)) != null) { 
-                if(a.Ind == null)
-                {
-                    a.Ind = new HashDinamico(a, sNombre, Atrib.IndexOf(a));
-                }
-
             }
             
         }
