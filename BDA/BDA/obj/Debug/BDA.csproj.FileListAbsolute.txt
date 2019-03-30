@@ -33,3 +33,5 @@ C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\AxInterop.MSComctlLib
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.csproj.ResolveComReference.cache
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.nuevoArchivo.resources
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.NuevaTabla.resources
+C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.NuevoAtributo.resources
+C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.VRegistro.resources

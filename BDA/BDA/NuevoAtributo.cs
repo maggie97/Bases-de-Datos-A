@@ -13,22 +13,21 @@ namespace BDA
     public partial class NuevoAtributo : Form
     {
         
-        public NuevoAtributo(List<Entidad> entidades)
+        public NuevoAtributo(Entidad entidades)
         {
             InitializeComponent();
-            foreach (Entidad e in entidades)
-                cmb_Entidad.Items.Add(e.sNombre);
-            cmbTipo.SelectedIndex = 0;
-            txt_Long.Text = "4";
+            
+            num_Long.Text = "4";
             cmbIndice.SelectedIndex = 0;
-            cmb_Entidad.SelectedIndex = 0;
-            //cmbTipo.Items.AddRange(new object[] {"int", "float", "char","string" });
+            lblEntidad.Text = entidades.sNombre;
+            cmbTipo.Items.AddRange(new object[] {"int", "float", "char" });
+            cmbTipo.SelectedIndex = 0;
         }
+        /*
         public NuevoAtributo(string nombre, char tipo, int longit, int indice,Entidad e)
         {
             InitializeComponent();
-            cmb_Entidad.Items.Add(e.sNombre);
-            cmb_Entidad.Enabled = false;
+            
             txt_Nombre.Text = nombre;
             if (tipo == 'C')
                 cmbTipo.SelectedIndex = 0;
@@ -36,14 +35,31 @@ namespace BDA
                 cmbTipo.SelectedIndex = 1;
             txt_Long.Text = longit.ToString();
             cmbIndice.SelectedIndex = indice;
-            //cmbTipo.Items.AddRange(new object[] {"int", "float", "char","string" });
-        }
+
+        }*/
         public string Nombre_atributo { get => txt_Nombre.Text; }
-        public int Long { get => Convert.ToInt32(txt_Long.Text); }
-        public int Tipo { get => cmbTipo.SelectedIndex; }//cmbTipo.SelectedText[0];}
-        public string Entidad { get => cmb_Entidad.SelectedItem.ToString(); }
-        public int Index { get => cmb_Entidad.SelectedIndex; }
+        public int Long { get => Convert.ToInt32(num_Long.Text); }
+        public int Tipo { get => cmbTipo.SelectedIndex; }
 
         public int TipoIndex { get => cmbIndice.SelectedIndex; }
+
+        private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (Tipo)
+            {
+                case 0: //int 
+                    num_Long.Value = 4;
+                    num_Long.Enabled = false;
+                    break;
+                case 1:
+                    num_Long.Value = 4;
+                    num_Long.Enabled = false;
+                    break;
+                default:
+                    num_Long.Value = 1;
+                    num_Long.Enabled = true;
+                    break;
+            }
+        }
     }
 }

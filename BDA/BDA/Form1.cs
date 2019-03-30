@@ -9,12 +9,22 @@ namespace BDA
     {
         private string Path;
         private string nombreBD;
+        private VRegistro vr;
         
 
         DDD ddd;
         public Form1()
         {
             InitializeComponent();
+            vr = new VRegistro();
+            vr.TopLevel = false;
+            vr.Dock = DockStyle.Fill;
+            if (panelContenido.Controls.Count > 0)
+                panelContenido.Controls.RemoveAt(0);
+            Form fh = vr as VRegistro;
+            panelContenido.Controls.Add(fh);
+            panelContenido.Tag = fh;
+            vr.Show();
         }
 
         
@@ -52,8 +62,10 @@ namespace BDA
             using (OpenFileDialog open = new OpenFileDialog())
             {
                 open.Filter = "Diccionario de Datos (*.dd)| *.dd";
+
                 ///open.InitialDirectory = Directory.GetParent(ddd.Fullname).ToString();
                 open.Title = "Seleciona un Diccionario de datos";
+
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     ddd = new DDD(open.FileName);
@@ -61,12 +73,11 @@ namespace BDA
                     Path = open.FileName;
                     Path = Path.Substring(0, Path.LastIndexOf('\\'));
                     string n = Path.Substring(Path.LastIndexOf('\\') + 1);
-
                     creArbol(n);
                 }
             }
         }
-        private void creArbol( string nomb)
+        private void creArbol(string nomb)
         {
             nombreBD = nomb;
             treeViewBD.Nodes.Clear();
@@ -75,44 +86,99 @@ namespace BDA
             
             TreeNode root = new TreeNode(nomb);
             root.ContextMenuStrip = contextItem;
-            foreach (FileInfo file in directory.GetFiles())
+            TreeNode n1 = null;
+            //foreach (FileInfo file in directory.GetFiles())
+            //{
+            //    if (file.Exists && file.Name.Substring(file.Name.IndexOf('.')+1) != "dd")
+            //    {
+            //        TreeNode node = new TreeNode(file.Name);
+            //        node.ContextMenuStrip = contextTabla;
+            //        root.Nodes.Add(node);
+            //        node.ImageIndex = node.Level;
+            //        node.SelectedImageIndex = node.Level;
+            //        if (n1 == null) n1 = node;
+
+            //    }
+            //}
+
+            foreach (Entidad e in ddd.EntidadesOrden)
             {
-                if (file.Exists && file.Name.Substring(file.Name.IndexOf('.')+1) != "dd")
+                if (!File.Exists(Path + '\\' + e.shortName + ".dat"))
                 {
-                    TreeNode node = new TreeNode(file.Name);
-                    node.ContextMenuStrip = contextTabla;
-                    root.Nodes.Add(node);
-                    node.ImageIndex = node.Level;
-                    node.SelectedImageIndex = node.Level;
+                    Archivo n = new Archivo(e.shortName, ".dat", Path);
                 }
+                TreeNode node = new TreeNode(e.shortName, 1, 1);
+                node.ContextMenuStrip = contextTabla;
+                foreach (Atributo a in e.Atrib)
+                {
+                    int img = 2;// ningun tipo de llave 
+
+                    switch (a.TipoIndice)
+                    {
+                        case 1: //llave primaria
+                            img = 3;
+                            break;
+                        case 2: //llave foranea 
+                            img = 4;
+                            break;
+                    }
+                    
+                    node.Nodes.Add(a.sNombre, a.sNombre, img, img);
+                }
+                //node.SelectedImageIndex = node.Level+1;
+                //node.ImageIndex = node.Level;
+                root.Nodes.Add(node);
+                if (n1 == null) n1 = node;
             }
             List<TreeNode> tree = new List<TreeNode>();
             tree.Add(root);
             treeViewBD.Nodes.AddRange(tree.ToArray());
             treeViewBD.ExpandAll();
+            treeViewBD.SelectedNode = n1;
+
         }
         private void creArbol()
         {
             treeViewBD.Nodes.Clear();
             if (!Directory.Exists(Path)) return;
             DirectoryInfo directory = new DirectoryInfo(Path);
-
+            TreeNode n1 = null;
             TreeNode root = new TreeNode(nombreBD);
             root.ContextMenuStrip = contextItem;
-            foreach (FileInfo file in directory.GetFiles())
+            //foreach (FileInfo file in directory.GetFiles())
+            //{
+            //    if (file.Exists && file.Name.Substring(file.Name.IndexOf('.') + 1) != "dd")
+            //    {
+            //        TreeNode node = new TreeNode(file.Name);
+            //        node.ContextMenuStrip = contextTabla;
+
+            //        root.Nodes.Add(node);
+            //        if (n1 == null) n1 = node;
+
+            //    }
+            //}
+            foreach (Entidad e in ddd.EntidadesOrden)
             {
-                if (file.Exists && file.Name.Substring(file.Name.IndexOf('.') + 1) != "dd")
+                if(!File.Exists(Path + '\\'+ e.shortName + ".dat"))
                 {
-                    TreeNode node = new TreeNode(file.Name);
-                    node.ContextMenuStrip = contextTabla;
-                    
-                    root.Nodes.Add(node);
-                    
+                    Archivo n = new Archivo(e.shortName, ".dat", Path);
                 }
-            }
+                TreeNode node = new TreeNode(e.shortName);
+                node.ContextMenuStrip = contextTabla;
+                foreach (Atributo a in e.Atrib)
+                {
+                    node.Nodes.Add(a.sNombre);
+                }
+                node.SelectedImageIndex = node.Level;
+                node.ImageIndex = node.Level;
+                root.Nodes.Add(node);
+                if (n1 == null) n1 = node;
+            } 
+
             List<TreeNode> tree = new List<TreeNode>();
             tree.Add(root);
             treeViewBD.Nodes.AddRange(tree.ToArray());
+            treeViewBD.SelectedNode = n1;
         }
         private void nuevoDD()
         {
@@ -128,12 +194,7 @@ namespace BDA
                         using (BinaryWriter writer = new BinaryWriter(File.Open(ddd.Fullname, FileMode.Create)))
                         {
                             writer.Write(ddd.Cab);
-
-                            /*txtCab.Text = ddd.Cab.ToString();
-                            Enable_Entidades_Atributos(true);
-                            btn_Registro.Enabled = true;*/
-
-                            /**/
+                             
                             creArbol(n.name);
                         }
                     }
@@ -193,7 +254,6 @@ namespace BDA
 
             File.Move(Path + '\\' + nombreBD + ".dd", Path + '\\' + res + ".dd");
             Directory.Move(Path , aux + '\\'+ res);
-
             
             Path = aux + '\\' + res;
             nombreBD = res;
@@ -215,6 +275,10 @@ namespace BDA
                     Archivo n = new Archivo(  nueva.Nombre_Entidad, ".dat", Path );
                     creArbol();
                 }
+                else
+                {
+                    MessageBox.Show("Ya existe una tabla con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -225,15 +289,54 @@ namespace BDA
 
         private void treeViewBD_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            
         }
 
         private void nuevoAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NuevoAtributo nuevo = new NuevoAtributo(ddd.EntidadesOrden);
-            if(nuevo.ShowDialog() == DialogResult.OK)
-            {
+            int i = treeViewBD.SelectedNode.Index;
+            string name = treeViewBD.SelectedNode.Text;
+            string n = treeViewBD.SelectedNode.Text.Split('.')[0];
+            Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
+            NuevoAtributo nuevo = new NuevoAtributo(ent);
 
+            if (nuevo.ShowDialog() == DialogResult.OK)
+            {
+                long dir = -1;
+
+                Atributo atrib = new Atributo(nuevo.Nombre_atributo, ddd.Longitud, nuevo.Tipo, nuevo.Long, nuevo.TipoIndex, -1, -1);
+                ddd.EntidadesOrden[i].nuevoA(atrib);
+                ddd.guardaAtrib(atrib);
+                ddd.sobreescribe_archivo();
+                ddd.ordena();
+                vr.VerTabla(ent);
             }
+        }
+
+        private void eliminarTablaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string name = treeViewBD.SelectedNode.Text;
+            string n = treeViewBD.SelectedNode.Text.Split('.')[0];
+            ddd.eliminaEntidad(n);
+            File.Delete(Path + '\\' + name);
+            creArbol();
+        }
+
+        private void treeViewBD_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (treeViewBD.SelectedNode != null && treeViewBD.SelectedNode.Level == 1)
+            {
+                string name = treeViewBD.SelectedNode.Text.Split('.')[0];
+                //int i = treeViewBD.SelectedNode.Index;
+                //Entidad ent = ddd.EntidadesOrden[i];
+                Entidad ent = ddd.EntidadesOrden.Find(o => o.sNombre.Contains(name));
+                vr.VerTabla(ent);
+            }
+        }
+
+        private void treeViewBD_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            
         }
     }
 }

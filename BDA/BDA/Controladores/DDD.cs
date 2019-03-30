@@ -51,7 +51,7 @@ namespace BDA
                         if (reader.PeekChar() >= 70 || reader.PeekChar()<60)
                         {
                             list_insercion.Add(leeEntidad(reader, nomb, dir));
-                            list_entidades.Add(list_insercion.Last());
+                            //list_entidades.Add(list_insercion.Last());
                             obj.Add(list_insercion.Last());
                         }
                         else
@@ -75,10 +75,27 @@ namespace BDA
                                         }
                                 }
                             }
-                        } 
+                        }
+                        
                     }
+                    entidades(cab);
                 }
                 catch { }
+            }
+        }
+        public void entidades(long ap)
+        {
+            long dir = ap;
+            while (dir != -1)
+            {
+                foreach(Entidad e in list_insercion)
+                {
+                    if (e.Dir_Entidad == dir)
+                    {
+                        list_entidades.Add(e);
+                        dir = e.Dir_sig;
+                    }
+                }
             }
         }
         public List<Entidad> RefreshGrid()

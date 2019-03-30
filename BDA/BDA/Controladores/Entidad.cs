@@ -81,6 +81,10 @@ namespace BDA
                 return nom;
             }
         }
+        public string shortName
+        {
+            get => sNombre.Split(' ')[0];
+        }
 
         public List<Atributo> Atrib { get => atrib; set => atrib = value; }
         public List<List<string>> Registros { get => registros; set => registros = value; }

@@ -34,6 +34,7 @@
             this.nuevoAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.eliminarTablaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifiicarTablaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nuevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -73,15 +74,16 @@
             this.contextTabla.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nuevoAtributoToolStripMenuItem,
             this.toolStripSeparator2,
-            this.eliminarTablaToolStripMenuItem});
+            this.eliminarTablaToolStripMenuItem,
+            this.modifiicarTablaToolStripMenuItem});
             this.contextTabla.Name = "contextTabla";
             this.contextTabla.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextTabla.Size = new System.Drawing.Size(181, 76);
+            this.contextTabla.Size = new System.Drawing.Size(157, 76);
             // 
             // nuevoAtributoToolStripMenuItem
             // 
             this.nuevoAtributoToolStripMenuItem.Name = "nuevoAtributoToolStripMenuItem";
-            this.nuevoAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nuevoAtributoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.nuevoAtributoToolStripMenuItem.Text = "Nuevo Atributo";
             this.nuevoAtributoToolStripMenuItem.Click += new System.EventHandler(this.nuevoAtributoToolStripMenuItem_Click);
             // 
@@ -92,10 +94,16 @@
             // 
             // eliminarTablaToolStripMenuItem
             // 
-            this.eliminarTablaToolStripMenuItem.Enabled = false;
             this.eliminarTablaToolStripMenuItem.Name = "eliminarTablaToolStripMenuItem";
             this.eliminarTablaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.eliminarTablaToolStripMenuItem.Text = "Eliminar Tabla";
+            this.eliminarTablaToolStripMenuItem.Click += new System.EventHandler(this.eliminarTablaToolStripMenuItem_Click);
+            // 
+            // modifiicarTablaToolStripMenuItem
+            // 
+            this.modifiicarTablaToolStripMenuItem.Name = "modifiicarTablaToolStripMenuItem";
+            this.modifiicarTablaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.modifiicarTablaToolStripMenuItem.Text = "Modificar Tabla";
             // 
             // contextItem
             // 
@@ -143,12 +151,15 @@
             this.imageList1.Images.SetKeyName(0, "icons8-database-16.png");
             this.imageList1.Images.SetKeyName(1, "icons8-spreadsheet-file-24.png");
             this.imageList1.Images.SetKeyName(2, "icons8-placeholder-thumbnail-xml-24.png");
-            this.imageList1.Images.SetKeyName(3, "icons8-grid-2-48.png");
-            this.imageList1.Images.SetKeyName(4, "icons8-column-48.png");
-            this.imageList1.Images.SetKeyName(5, "mas.png");
-            this.imageList1.Images.SetKeyName(6, "icons8-edit-file-24.png");
-            this.imageList1.Images.SetKeyName(7, "icons8-new-copy-24.png");
-            this.imageList1.Images.SetKeyName(8, "archivo-de-texto.png");
+            this.imageList1.Images.SetKeyName(3, "icons8-key-2-48.png");
+            this.imageList1.Images.SetKeyName(4, "icons8-key-2-filled-50.png");
+            this.imageList1.Images.SetKeyName(5, "icons8-key-2-50.png");
+            this.imageList1.Images.SetKeyName(6, "icons8-grid-2-48.png");
+            this.imageList1.Images.SetKeyName(7, "icons8-column-48.png");
+            this.imageList1.Images.SetKeyName(8, "mas.png");
+            this.imageList1.Images.SetKeyName(9, "icons8-edit-file-24.png");
+            this.imageList1.Images.SetKeyName(10, "icons8-new-copy-24.png");
+            this.imageList1.Images.SetKeyName(11, "archivo-de-texto.png");
             // 
             // panel5
             // 
@@ -203,6 +214,8 @@
             this.treeViewBD.ShowNodeToolTips = true;
             this.treeViewBD.Size = new System.Drawing.Size(200, 462);
             this.treeViewBD.TabIndex = 0;
+            this.treeViewBD.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewBD_BeforeSelect);
+            this.treeViewBD.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewBD_AfterSelect);
             this.treeViewBD.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewBD_NodeMouseClick);
             this.treeViewBD.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeViewBD_MouseClick);
             // 
@@ -359,6 +372,7 @@
         private System.Windows.Forms.ToolStripMenuItem abrirBaseDeDatosToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TreeView treeViewBD;
+        private System.Windows.Forms.ToolStripMenuItem modifiicarTablaToolStripMenuItem;
     }
 }
 
