@@ -6,7 +6,7 @@ using System.IO;
 
 namespace BDA
 {
-    class DDD : Archivo
+    public class DDD : Archivo
     { 
         List<Object> obj = new List<object>();
         List<Entidad> list_insercion = new List<Entidad>();
@@ -44,8 +44,6 @@ namespace BDA
                         char[] nombre = reader.ReadChars(30);
                         foreach (char n in nombre) 
                             nomb += n;
-                        
-                        
                         dir = reader.ReadInt64();
                         Console.WriteLine(reader.PeekChar()); 
                         if (reader.PeekChar() >= 70 || reader.PeekChar()<60)
@@ -78,66 +76,84 @@ namespace BDA
                         }
                         
                     }
-                    entidades(cab);
+                    
                 }
-                catch { }
+                catch (Exception  e){ }
+                entidades(cab);
+            }
+        }
+        public  void lee_()
+        {
+            leeCab();
+            using (BinaryReader reader = new BinaryReader(File.Open(base.Fullname, FileMode.Open)))
+            {
+                Console.WriteLine(cab);
+                try
+                {
+                    long dirSig = cab; 
+                    reader.BaseStream.Seek(dirSig, SeekOrigin.Begin);
+                    Console.WriteLine(reader.PeekChar());
+                    //lee entidades
+                    while (dirSig != -1)
+                    {
+                        reader.BaseStream.Seek(dirSig, SeekOrigin.Begin);
+                        string nomb = "";
+                        long dir;
+                        char[] nombre = reader.ReadChars(30);
+                        foreach (char n in nombre)
+                            nomb += n;
+                        dir = reader.ReadInt64();
+                        //Console.WriteLine(reader.PeekChar());
+                        Entidad ent = leeEntidad(reader, nomb, dir);
+                        list_entidades.Add(ent);
+                        obj.Add(ent);
+                        dirSig = ent.Dir_sig;
+                        //list_entidades.Add(list_insercion.Last());
+                    }
+                    foreach(Entidad e in list_entidades)
+                    {
+                        dirSig = e.Dir_Atributos;
+                        while (dirSig != -1)
+                        {
+                            reader.BaseStream.Seek(dirSig, SeekOrigin.Begin);
+                            string nomb = "";
+                            long dir;
+                            char[] nombre = reader.ReadChars(30);
+                            foreach (char n in nombre)
+                                nomb += n;
+                            dir = reader.ReadInt64();
+                            //----------------
+                            //Console.WriteLine(reader.PeekChar());
+                            Atributo a = leeAtributo(reader, nomb, Convert.ToInt64(dir));
+                            e.Atrib.Add(a);
+                            e.Indice(Fullname.Substring(0, Fullname.LastIndexOf('\\')));
+                            dirSig = a.DirSig;
+                        }
+                    }
+                    
+
+
+                }
+                catch (Exception e) { }
             }
         }
         public void entidades(long ap)
         {
             long dir = ap;
-            while (dir != -1)
+            //while (dir != -1)
             {
                 foreach(Entidad e in list_insercion)
                 {
                     if (e.Dir_Entidad == dir)
                     {
                         list_entidades.Add(e);
-                        e.Indice(1);
+                        e.Indice(Fullname.Substring(0, Fullname.LastIndexOf('\\')));
                         dir = e.Dir_sig;
                     }
                 }
             }
         }
-        public List<Entidad> RefreshGrid()
-        {
-            List<Entidad> e= new List<Entidad>();
-            using (BinaryReader reader = new BinaryReader(File.Open(Fullname, FileMode.Open)))
-            {
-                long cab = reader.ReadInt64();
-                Console.WriteLine(cab);
-                //int i = 0;
-                try
-                {
-                    Console.WriteLine("Refresh");
-                    while (reader.PeekChar() != -1)
-                    {
-                        string nomb = "", dir, dir_atr, dir_dat, dir_sig;
-                        char[] nombre = reader.ReadChars(30);
-                        foreach (char c in nombre)
-                        {
-                            nomb += c;
-                        }
-                        dir = reader.ReadInt64().ToString();
-                        Console.WriteLine(reader.PeekChar());
-                        
-                        if(reader.PeekChar() > 70 || reader.PeekChar() < 60)
-                        {
-                            e.Add(leeEntidad(reader, nomb, Convert.ToInt64(dir)));
-                        }
-                        else
-                        { 
-                            Atributo n = leeAtributo(reader, nomb, Convert.ToInt64(dir));
-                            foreach(Entidad ent in e)
-                                if (ent.Dir_Atributos == n.DirAtributo)
-                                    ent.Atrib.Add(n); 
-                        } 
-                    }
-                }
-                catch { }
-            }
-            return e;
-        }
+       
         public void sobreescribeCab()
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(Fullname, FileMode.Open)))
@@ -279,9 +295,11 @@ namespace BDA
             }
         }
         #region atributos
-        public void nuevoAtributo(string nombre, int tipo, int longi,Entidad e, int TipoIndice)
-        { 
-            Atributo nuevo = new Atributo(nombre, Longitud, tipo, longi, TipoIndice, -1, -1);
+        public void nuevoAtributo(string nombre, int tipo, int longi,Entidad e, int TipoIndice, Atributo referencia)
+        {
+            long index = -1;
+            if (referencia != null) index = referencia.DirAtributo;
+            Atributo nuevo = new Atributo(nombre, Longitud, tipo, longi, TipoIndice, index, -1);
             e.nuevoA(nuevo);
             //guardaAtrib(nuevo);
             obj.Add(nuevo);
@@ -308,7 +326,7 @@ namespace BDA
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(Fullname, FileMode.Open)))
             {
-                Console.WriteLine(a.sNombre + "  " + a.DirAtributo);
+                Console.WriteLine(a.sNombre + "  " + a.DirAtributo + " " + a.DirIndice);
                 writer.Seek(Convert.ToInt32(a.DirAtributo), SeekOrigin.Begin);
                 writer.Write(a.Nombre);
                 writer.Write(a.DirAtributo);
@@ -336,11 +354,23 @@ namespace BDA
             Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", name, dir, tipo, l, tipoI, dirIn, dirsig);
             return new Atributo(name, dir, tipo, l, tipoI, dirIn, dirsig);
         }
-        public void eliminaAtributo(string e, int i)
+        public bool eliminaAtributo(string e, int i)
         {
-            Entidad ent = list_insercion.Find(x => x.sNombre.Contains(e));
+            Entidad ent = list_entidades.Find(x => x.sNombre.Contains(e));
             long ds = ent.Atrib[i].DirSig;
-            if(i > 0)// no es el primer elemento
+            Atributo a = ent.Atrib[i];
+            foreach (Entidad auxE in EntidadesInser)
+            {
+                if(auxE.Sec != null)
+                    foreach(Controladores.Secundario auxA in auxE.Sec)
+                    {
+                        if(auxA.Atributo == a)
+                        {
+                            return false;
+                        }
+                    }
+            }
+            if (i > 0)// no es el primer elemento
             {
                 ent.Atrib[i - 1].DirSig = ds;
                 ent.Atrib[i].DirSig = -1;
@@ -352,10 +382,13 @@ namespace BDA
                 else
                     ent.Dir_Atributos = ent.Atrib[i + 1].DirAtributo;
                 ent.Atrib[i].DirSig = -1;
-
             }
             ent.Atrib.RemoveAt(i);
             sobreescribe_archivo();
+            return true;
+            
+            return false;
+            
         }
         #endregion
  

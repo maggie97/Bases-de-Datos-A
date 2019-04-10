@@ -27,13 +27,13 @@ namespace BDA
                 leerArch(e.Dir_Datos);
                 
             }
-            indices();
+            //indices();
         }
 
-        public void indices()
-        {
-            entidad.Indice(0);
-        }
+        //public void indices()
+        //{
+        //    entidad.Indice(0);
+        //}
         public void sobreescribirArch()
         {
             foreach(List<string> reg in entidad.Registros)

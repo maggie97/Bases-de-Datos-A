@@ -40,7 +40,8 @@ namespace BDA
             }
             this.longitud = longitud;
             this.tipoIndice = tipoIndice;
-            
+            //si es indice primario apunta a el archivo de indices xD
+            //si es indice secundario apunta a el atributo al q se hace referencia 
             this.dirIndice = dirIndice;
             dirSig = dirs; 
         }
@@ -68,21 +69,6 @@ namespace BDA
         public long DirSig { get => dirSig; set => dirSig = value; }
         public long DirIndice { get => dirIndice; set => dirIndice = value; }
         public Indice Ind { get => ind; set => ind = value; }
-        /*
-        public Indice creaIndice(int i )
-        {
-            if (ind != null) return ind;
-            switch (tipoIndice)
-            {
-                case 2:
-                    dirIndice = 0;
-                    ind = new Primario(this, (this.tipo == 'C'), sNombre, i, longitud);
-                    break;
-                case 3:
-                    ind = new Secundario(sNombre, i);
-                    break;
-            }
-            return ind;
-        }*/
+        
     }
 }

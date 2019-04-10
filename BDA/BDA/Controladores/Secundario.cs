@@ -12,29 +12,54 @@ namespace BDA.Controladores
         List<Cajon_Secundario> principal;
         int capacidad = 100;
         int tope = 0;
-        public Secundario(Atributo a, string nombre, int i): base (nombre, i, a)
+        public Secundario(Atributo atributoAct, string path, string nombre, int i): base (path + '\\'+ nombre, i, atributoAct)
         {
-            if(!File.Exists(nombre + ".idx"))
+            /*if(!File.Exists(nombre + ".idx"))
             {
                 nuevoArch();
-                a.DirIndice = 0;
+                atributoAct.DirIndice = 0;
                 principal = new List<Cajon_Secundario>();
-                principal.Add(new Cajon_Secundario(a));
-                escribeSecundario((int)a.DirIndice);
+                principal.Add(new Cajon_Secundario(atributoAct));
+                escribeSecundario((int)atributoAct.DirIndice);
             }
-            else if(a.DirIndice < 0)
+            else if(atributoAct.DirIndice < 0)
             {
-                a.DirIndice = Longitud;
+                atributoAct.DirIndice = Longitud;
                 principal = new List<Cajon_Secundario>();
-                principal.Add(new Cajon_Secundario(a));
-                escribeSecundario((int)a.DirIndice);
+                principal.Add(new Cajon_Secundario(atributoAct));
+                escribeSecundario((int)atributoAct.DirIndice);
             }
             else
             {
-                leeBloquePrincipal(a.DirIndice);
+                leeBloquePrincipal(atributoAct.DirIndice);
+            }*/
+        }
+        public Atributo RelacionAtributo()
+        {
+            if (atrib.DirIndice == -1) return null;
+            string[] arch = Fullname.Split('\\');
+            string dicc = base.Fullname.Substring(0, Fullname.LastIndexOf('\\')) + '\\' + arch[arch.Length - 2] + ".dd";
+            using (BinaryReader reader = new BinaryReader(File.Open(dicc, FileMode.Open)))
+            {
+                reader.BaseStream.Seek(atrib.DirIndice, SeekOrigin.Begin);
+                string nomb = "";
+                char[] name = reader.ReadChars(30);
+                foreach (char c in name) nomb += c;
+                long dir = reader.ReadInt64();
+                char tipo;
+                long dirIn, dirsig;
+                int l, tipoI;
+
+                tipo = reader.ReadChar();
+                l = reader.ReadInt32();
+                tipoI = reader.ReadInt32();
+                dirIn = reader.ReadInt64();
+                dirsig = reader.ReadInt64();
+
+                Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", nomb, dir, tipo, l, tipoI, dirIn, dirsig);
+                return new Atributo(nomb, dir, tipo, l, tipoI, dirIn, dirsig);
             }
         }
-
         internal List<Cajon_Secundario> Principal { get => principal; set => principal = value; }
         public void insertaEscribe(string cb, long reg)
         {

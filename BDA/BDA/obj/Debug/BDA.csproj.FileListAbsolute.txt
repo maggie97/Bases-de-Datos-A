@@ -35,3 +35,4 @@ C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.nuevoArchivo.reso
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.NuevaTabla.resources
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.NuevoAtributo.resources
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.VRegistro.resources
+C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.AltaRegistros.resources

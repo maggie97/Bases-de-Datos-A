@@ -79,6 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AltaRegistros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AltaRegistros.designer.cs">
+      <DependentUpon>AltaRegistros.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controladores\Archivo.cs" />
     <Compile Include="Controladores\ArchivoRegistros.cs" />
     <Compile Include="Controladores\Atributo.cs" />
@@ -121,6 +127,9 @@
     <Compile Include="VRegistro.Designer.cs">
       <DependentUpon>VRegistro.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AltaRegistros.resx">
+      <DependentUpon>AltaRegistros.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

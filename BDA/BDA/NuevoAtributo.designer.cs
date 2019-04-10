@@ -41,6 +41,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblEntidad = new System.Windows.Forms.Label();
             this.num_Long = new System.Windows.Forms.NumericUpDown();
+            this.cmbLlave = new System.Windows.Forms.ComboBox();
+            this.lblLlave = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.num_Long)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +80,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(44, 103);
+            this.label2.Location = new System.Drawing.Point(44, 98);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 16);
             this.label2.TabIndex = 4;
@@ -88,7 +90,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(44, 133);
+            this.label3.Location = new System.Drawing.Point(44, 123);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 16);
             this.label3.TabIndex = 5;
@@ -104,7 +106,7 @@
             // cmbTipo
             // 
             this.cmbTipo.FormattingEnabled = true;
-            this.cmbTipo.Location = new System.Drawing.Point(156, 102);
+            this.cmbTipo.Location = new System.Drawing.Point(156, 97);
             this.cmbTipo.Name = "cmbTipo";
             this.cmbTipo.Size = new System.Drawing.Size(257, 21);
             this.cmbTipo.TabIndex = 11;
@@ -113,17 +115,18 @@
             // cmbIndice
             // 
             this.cmbIndice.FormattingEnabled = true;
-            this.cmbIndice.Location = new System.Drawing.Point(156, 158);
+            this.cmbIndice.Location = new System.Drawing.Point(156, 148);
             this.cmbIndice.Name = "cmbIndice";
             this.cmbIndice.Size = new System.Drawing.Size(257, 21);
             this.cmbIndice.TabIndex = 13;
             this.cmbIndice.TabStop = false;
+            this.cmbIndice.SelectedIndexChanged += new System.EventHandler(this.cmbIndice_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(44, 159);
+            this.label5.Location = new System.Drawing.Point(44, 149);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 16);
             this.label5.TabIndex = 12;
@@ -150,10 +153,31 @@
             // 
             // num_Long
             // 
-            this.num_Long.Location = new System.Drawing.Point(156, 133);
+            this.num_Long.Location = new System.Drawing.Point(156, 123);
             this.num_Long.Name = "num_Long";
             this.num_Long.Size = new System.Drawing.Size(257, 20);
             this.num_Long.TabIndex = 16;
+            // 
+            // cmbLlave
+            // 
+            this.cmbLlave.FormattingEnabled = true;
+            this.cmbLlave.Location = new System.Drawing.Point(156, 175);
+            this.cmbLlave.Name = "cmbLlave";
+            this.cmbLlave.Size = new System.Drawing.Size(257, 21);
+            this.cmbLlave.TabIndex = 18;
+            this.cmbLlave.TabStop = false;
+            this.cmbLlave.Visible = false;
+            // 
+            // lblLlave
+            // 
+            this.lblLlave.AutoSize = true;
+            this.lblLlave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLlave.Location = new System.Drawing.Point(44, 176);
+            this.lblLlave.Name = "lblLlave";
+            this.lblLlave.Size = new System.Drawing.Size(95, 16);
+            this.lblLlave.TabIndex = 17;
+            this.lblLlave.Text = "Llave Foranea";
+            this.lblLlave.Visible = false;
             // 
             // NuevoAtributo
             // 
@@ -162,6 +186,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancelar;
             this.ClientSize = new System.Drawing.Size(463, 244);
+            this.Controls.Add(this.cmbLlave);
+            this.Controls.Add(this.lblLlave);
             this.Controls.Add(this.num_Long);
             this.Controls.Add(this.lblEntidad);
             this.Controls.Add(this.label4);
@@ -196,5 +222,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblEntidad;
         private System.Windows.Forms.NumericUpDown num_Long;
+        private System.Windows.Forms.ComboBox cmbLlave;
+        private System.Windows.Forms.Label lblLlave;
     }
 }

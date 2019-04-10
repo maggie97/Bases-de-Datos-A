@@ -12,49 +12,28 @@ namespace BDA
 {
     public partial class NuevoAtributo : Form
     {
-        public class Clave
+        DDD diccionario;
+        Entidad entidad;
+        public NuevoAtributo(Entidad entidad, DDD dic)
         {
-            int tipo;
-            string nombre;
-
-            public Clave(string nombre, int tipo)
-            {
-                Nombre = nombre;
-                Tipo = tipo;
-            }
-
-            public string Nombre { get => nombre; set => nombre = value; }
-            public int Tipo { get => tipo; set => tipo = value; }
-        }
-        public NuevoAtributo(Entidad entidades)
-        {
+            this.entidad = entidad;
             InitializeComponent();
-            entidades.Indice(0);
+            //entidad.Indice(0);
             num_Long.Text = "4";
-            
-            lblEntidad.Text = entidades.sNombre;
+            diccionario = dic;
+            lblEntidad.Text = entidad.sNombre;
             cmbTipo.Items.AddRange(new object[] {"int", "float", "char" });
-            if(entidades.Prim == null)
+            if(entidad.Prim == null)
                 cmbIndice.Items.AddRange(new object[] {"Sin Llave", "Llave Primaria", "Llave Foranea" });
             else
                 cmbIndice.Items.AddRange(new object[] { "Sin Llave", "Llave Foranea" });
             cmbIndice.SelectedIndex = 0;
             cmbTipo.SelectedIndex = 0;
         }
-        /*
-        public NuevoAtributo(string nombre, char tipo, int longit, int indice,Entidad e)
+        public void modifica(Atributo a)
         {
-            InitializeComponent();
-            
-            txt_Nombre.Text = nombre;
-            if (tipo == 'C')
-                cmbTipo.SelectedIndex = 0;
-            else
-                cmbTipo.SelectedIndex = 1;
-            txt_Long.Text = longit.ToString();
-            cmbIndice.SelectedIndex = indice;
 
-        }*/
+        }
         public string Nombre_atributo { get => txt_Nombre.Text; }
         public int Long { get => Convert.ToInt32(num_Long.Text); }
         public int Tipo { get => cmbTipo.SelectedIndex; }
@@ -75,6 +54,7 @@ namespace BDA
                 return i;
             }
         }
+        //public 
 
         private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -94,5 +74,41 @@ namespace BDA
                     break;
             }
         }
+        public Atributo Relacion {
+            get
+            {
+                if (TipoIndex == 3)
+                {
+                    string nEnt = cmbLlave.SelectedItem.ToString().Split(':')[0];
+                    Entidad e = diccionario.EntidadesOrden.Find(o => o.shortName.CompareTo(nEnt) == 0);
+                    
+                    return e.Prim.Atributo;
+                }
+                return null;
+            }
+        }
+
+        private void cmbIndice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(TipoIndex == 3)
+            {
+                cmbLlave.Visible = true;
+                lblLlave.Visible = true;
+                cmbLlave.Items.Clear();
+                foreach(Entidad ent in diccionario.EntidadesOrden)
+                {
+                    if(ent!=entidad &&  ent.Prim != null)
+                    {
+                        cmbLlave.Items.AddRange(new object[] { ent.shortName + ":"+ ent.Prim.Atributo.sNombre });
+                    }
+                }
+            }
+            else
+            {
+                cmbLlave.Visible = false;
+                lblLlave.Visible = false;
+            }
+        }
+
     }
 }

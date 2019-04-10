@@ -96,7 +96,7 @@ namespace BDA
             if (Registros == null || Registros.Count == 0)
             {
                 registros = new List<List<string>>();
-                Indice(1);
+                
             }
             registros.Add(atributos);
             if (prim != null)
@@ -112,14 +112,13 @@ namespace BDA
             }
             ordenaReg();
         }
-        public void Indice(int op)
+        public void Indice(string Ruta)
         {
-            bool nuevoArch = false;
-            if(!System.IO.File.Exists(sNombre + ".idx"))
-            {
-                for(int i = 0; i< atrib.Count; i++) 
-                    atrib[i].DirIndice = -1;
-            }
+            //if(!System.IO.File.Exists(sNombre + ".idx"))
+            //{
+            //    for(int i = 0; i< atrib.Count; i++) 
+            //        atrib[i].DirIndice = -1;
+            //}
             Atributo a = null;
             if( (a = Atrib.Find(o => o.TipoIndice == 2)) != null){
                 if (a.Ind == null)
@@ -133,9 +132,10 @@ namespace BDA
                 if(a.Ind == null)
                 {
                     if (sec == null) sec = new List<Secundario>();
-                    //if ()
-                    if( sec.FindIndex(o=>o.Atributo == a) < 0)
-                        a.Ind = new Secundario(a, sNombre, Atrib.IndexOf(a));
+                    if (sec.FindIndex(o => o.Atributo == a) < 0)
+                    {
+                        a.Ind = new Secundario(a, Ruta, sNombre, Atrib.IndexOf(a));
+                    }
                 }
                 sec.Add((Secundario)a.Ind);
             }

@@ -55,6 +55,9 @@
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoAtributoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextAtributo = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.eliminarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextTabla.SuspendLayout();
             this.contextItem.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -66,6 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.contextAtributo.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextTabla
@@ -104,6 +108,7 @@
             this.modifiicarTablaToolStripMenuItem.Name = "modifiicarTablaToolStripMenuItem";
             this.modifiicarTablaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.modifiicarTablaToolStripMenuItem.Text = "Modificar Tabla";
+            this.modifiicarTablaToolStripMenuItem.Click += new System.EventHandler(this.modifiicarTablaToolStripMenuItem_Click);
             // 
             // contextItem
             // 
@@ -283,7 +288,6 @@
             this.bunifuImageButton1.TabIndex = 2;
             this.bunifuImageButton1.TabStop = false;
             this.bunifuImageButton1.Zoom = 10;
-            this.bunifuImageButton1.Click += new System.EventHandler(this.bunifuImageButton1_Click);
             // 
             // menuStrip1
             // 
@@ -318,6 +322,27 @@
             this.abrirBaseDeDatosToolStripMenuItem.Text = "Abrir Base de Datos";
             this.abrirBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
             // 
+            // contextAtributo
+            // 
+            this.contextAtributo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eliminarAtributoToolStripMenuItem,
+            this.modificarAtributoToolStripMenuItem});
+            this.contextAtributo.Name = "contextAtributo";
+            this.contextAtributo.Size = new System.Drawing.Size(181, 70);
+            // 
+            // eliminarAtributoToolStripMenuItem
+            // 
+            this.eliminarAtributoToolStripMenuItem.Name = "eliminarAtributoToolStripMenuItem";
+            this.eliminarAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.eliminarAtributoToolStripMenuItem.Text = "Eliminar Atributo";
+            this.eliminarAtributoToolStripMenuItem.Click += new System.EventHandler(this.eliminarAtributoToolStripMenuItem_Click);
+            // 
+            // modificarAtributoToolStripMenuItem
+            // 
+            this.modificarAtributoToolStripMenuItem.Name = "modificarAtributoToolStripMenuItem";
+            this.modificarAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modificarAtributoToolStripMenuItem.Text = "Modificar Atributo";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -342,6 +367,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextAtributo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,6 +399,9 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TreeView treeViewBD;
         private System.Windows.Forms.ToolStripMenuItem modifiicarTablaToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextAtributo;
+        private System.Windows.Forms.ToolStripMenuItem eliminarAtributoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modificarAtributoToolStripMenuItem;
     }
 }
 

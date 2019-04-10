@@ -17,7 +17,11 @@ namespace BDA
         {
             InitializeComponent();
         }
-        
+        public NuevaTabla(string nombre)
+        {
+            InitializeComponent();
+            txt_Nombre.Text = nombre;
+        }
         private void NuevaEntidad_Load(object sender, EventArgs e)
         {
 
