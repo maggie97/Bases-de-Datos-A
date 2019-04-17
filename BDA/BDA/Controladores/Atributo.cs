@@ -28,13 +28,13 @@ namespace BDA
             this.tipo = (char)tipo;
             switch (tipo)
             {
-                case 0:
+                case 2:
                     this.tipo = 'C';
                     break;
-                case 1:
+                case 0:
                     this.tipo = 'E';
                     break;
-                case 2:
+                case 1:
                     this.tipo = 'F';
                     break;
             }

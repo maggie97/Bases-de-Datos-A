@@ -14,6 +14,8 @@ namespace BDA
     {
         DDD diccionario;
         Entidad entidad;
+        Entidad rel;
+        string[] s = { "Sin Llave", "Llave Primaria", "Llave Foranea" };
         public NuevoAtributo(Entidad entidad, DDD dic)
         {
             this.entidad = entidad;
@@ -32,7 +34,45 @@ namespace BDA
         }
         public void modifica(Atributo a)
         {
-
+            txt_Nombre.Text = a.sNombre;
+            switch (a.Tipo)
+            {
+                case 'C': cmbTipo.SelectedIndex = 2; break;
+                case 'E': cmbTipo.SelectedIndex = 0; break;
+            }
+            num_Long.Text =  a.Longitud.ToString();
+            cmbIndice.Items.Clear();
+            cmbIndice.Items.AddRange(s);
+            cmbIndice.SelectedIndex = a.TipoIndice - 1;
+            if(a.TipoIndice == 2 || a.TipoIndice == 3)
+            {
+                cmbLlave.Enabled = false;
+                cmbIndice.Enabled = false;
+                num_Long.Enabled = false;
+                cmbTipo.Enabled = false;
+                txt_Nombre.Enabled = false;
+                num_Long.Enabled = false;
+            }
+            if (a.TipoIndice == 3)
+            {
+                Controladores.Secundario s = (Controladores.Secundario)(a.Ind);
+                Atributo r = s.RelacionAtributo();
+                Entidad eR = BuscaPrim(r);
+                foreach (Entidad ent in diccionario.EntidadesOrden)
+                    if (ent != entidad && ent.Prim != null)
+                        cmbLlave.Items.AddRange(new object[] { ent.shortName + ":" + ent.Prim.Atributo.sNombre });
+                
+                cmbLlave.SelectedIndex = cmbLlave.FindString(eR.shortName);
+            }
+        }
+        private Entidad BuscaPrim(Atributo a)
+        {
+            for(int i = 0; i<diccionario.EntidadesOrden.Count; i++)
+            {
+                if (diccionario.EntidadesOrden[i].Prim != null && diccionario.EntidadesOrden[i].Prim.Atributo.DirAtributo == a.DirAtributo)
+                    return diccionario.EntidadesOrden[i];
+            }
+            return null;
         }
         public string Nombre_atributo { get => txt_Nombre.Text; }
         public int Long { get => Convert.ToInt32(num_Long.Text); }
@@ -95,11 +135,11 @@ namespace BDA
                 cmbLlave.Visible = true;
                 lblLlave.Visible = true;
                 cmbLlave.Items.Clear();
-                foreach(Entidad ent in diccionario.EntidadesOrden)
+                foreach (Entidad ent in diccionario.EntidadesOrden)
                 {
-                    if(ent!=entidad &&  ent.Prim != null)
+                    if (ent != entidad && ent.Prim != null)
                     {
-                        cmbLlave.Items.AddRange(new object[] { ent.shortName + ":"+ ent.Prim.Atributo.sNombre });
+                        cmbLlave.Items.AddRange(new object[] { ent.shortName + ":" + ent.Prim.Atributo.sNombre });
                     }
                 }
             }

@@ -167,6 +167,17 @@ namespace BDA
             else
                 dir_Datos = -1 ;
         }
+        public bool AtributoExiste(string nombre)
+        {
+            foreach (Atributo a in Atrib)
+            {
+                if (a.sNombre.Split(' ')[0] == nombre)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public void EliminaRegistro(List<string> reg)
         {
             Registros.Remove(reg);

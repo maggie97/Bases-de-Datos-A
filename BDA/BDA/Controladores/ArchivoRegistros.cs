@@ -17,23 +17,17 @@ namespace BDA
         {
             registros = new List<List<string>>();
             entidad = e;
-            if (!File.Exists(fullname) || e.Dir_Datos == -1)
+            if (!File.Exists(fullname) )
             {
                 nuevoArch();
-               
             }
             else
             {
                 leerArch(e.Dir_Datos);
-                
             }
             //indices();
         }
 
-        //public void indices()
-        //{
-        //    entidad.Indice(0);
-        //}
         public void sobreescribirArch()
         {
             foreach(List<string> reg in entidad.Registros)
@@ -78,13 +72,18 @@ namespace BDA
                         List<string> r = new List<string>();
                         r.Add(reader.ReadInt64().ToString());
                         foreach (var atrib in entidad.Atrib)
-                        { 
+                        {
                             if (atrib.Tipo == 'C')
-                            {  
-                                var a = reader.ReadChars(atrib.Longitud );
+                            {
+                                var a = reader.ReadChars(atrib.Longitud);
                                 string s = "";
-                                if (a[0] != '\t' && a[0] != '\u0013' && a[0] != '"')
-                                    foreach (char c in a) { s += c; }
+                                List<char> aux = a.ToList();
+                                while (aux.First() == '\t' || aux.First() == '\u0003' || aux.First() == '\u0013')
+                                {
+                                    aux.RemoveAt(0);
+                                }
+                                if (a[0] != '\t' && a[0] != '\u0013'  && a[0] != '"')
+                                    foreach (char c in aux) { s += c; }
                                 else
                                     for (int i = 1; i < a.Length; i++) s += a[i];
                                 r.Add(s);

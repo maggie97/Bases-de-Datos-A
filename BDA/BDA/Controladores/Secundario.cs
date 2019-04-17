@@ -214,25 +214,7 @@ namespace BDA.Controladores
                             break;
                     }
                 }
-                /*for (int i = 0; i < principal.Capacidad; i++)
-                {
-                    //Console.WriteLine(r.PeekChar());
-                    char[] cb = r.ReadChars(atrib.Longitud );
-                    Console.WriteLine(cb.ToArray());
-                    string s = "";
-                    while (s.Length < cb.Length) s += cb[s.Length];
-                    //Console.WriteLine(r.PeekChar());
-                    //List<char> ap = r.ReadChars(8).ToList();
-                    long ap = r.ReadInt64();
-                    Console.WriteLine(ap);
-                    if (ap != -1)
-                    {
-                        //inserta(s, ap);
-                        principal.Elementos[i].Cb = s;
-                        principal.Elementos[i].Ap = ap;
-                        tope++;
-                    }
-                }*/
+               
             }
         }
         public Cajon_Secundario leeCajon(long ap)

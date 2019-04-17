@@ -178,14 +178,17 @@ namespace BDA
             if (Directory.Exists(Path))
             {
                 //eliminar los arcchivos de la carpeta 
-                DirectoryInfo directory = new DirectoryInfo(Path);
-                foreach (FileInfo file in directory.GetFiles())
+                if(MessageBox.Show("¿Estas seguro que deseas eliminar la Base de Datos?", "Eliminar Base de Datos", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false ) == DialogResult.OK)
                 {
-                    file.Delete();
+                    DirectoryInfo directory = new DirectoryInfo(Path);
+                    foreach (FileInfo file in directory.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    // eliminar la carpeta (sin archivos)
+                    Directory.Delete(Path);
+                    creArbol();
                 }
-                // eliminar la carpeta (sin archivos)
-                Directory.Delete(Path);
-                creArbol();
             }
         }
         
@@ -233,7 +236,10 @@ namespace BDA
 
         private void nuevoAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            nuevoAtributo();
+            if (!nuevoAtributo())
+            {
+                MessageBox.Show("No se puede generar el Atributo ");
+            }
         }
 
         private void eliminarTablaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -259,7 +265,8 @@ namespace BDA
             {
                 string name = treeViewBD.SelectedNode.Text.Split('.')[0];
                 Entidad ent = ddd.EntidadesOrden.Find(o => o.sNombre.Contains(name));
-                vr.VerTabla(ent);
+                ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + ent.shortName + ".dat", ent);
+                vr.VerTabla(ent, archivo);
             }
             
         }
@@ -281,20 +288,23 @@ namespace BDA
         }
         private bool nuevoAtributo()
         {
+            
             bool r = false;
             int i = treeViewBD.SelectedNode.Index;
             string name = treeViewBD.SelectedNode.Text;
             string n = treeViewBD.SelectedNode.Text.Split('.')[0];
             Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
-            //.Indice(Path);
+            if (hayregistros(ent)) return false;
             NuevoAtributo nuevo = new NuevoAtributo(ent, ddd);
 
             if (nuevo.ShowDialog() == DialogResult.OK)
             {
                 long dir = -1;
+                if (ent.AtributoExiste(nuevo.Nombre_atributo)) return false;
                 ddd.nuevoAtributo(nuevo.Nombre_atributo, nuevo.Tipo, nuevo.Long, ent, nuevo.TipoIndex, nuevo.Relacion);
                 ent.Indice(Path);
-                vr.VerTabla(ent);
+                ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + ent.shortName + ".dat", ent);
+                vr.VerTabla(ent, archivo);
                 creArbol();
                 r = true;
             }
@@ -304,6 +314,7 @@ namespace BDA
         {
             
         }
+       
 
         private void modifiicarTablaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -339,21 +350,103 @@ namespace BDA
         {
             if (e.Prim != null)
                 foreach (Entidad ent in ddd.EntidadesOrden)
-                    if (ent != e && ent.Sec != null) 
+                    if (ent != e && ent.Sec != null)
                         foreach (Controladores.Secundario s in ent.Sec)
                             if (s.RelacionAtributo() != null && s.RelacionAtributo().DirAtributo == e.Prim.Atributo.DirAtributo)
                                 return true;
             return false;
+
         }
+        
         private void eliminarAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode n = treeViewBD.SelectedNode;
+            
             if(n.Level == 2)
             {
+                string text = treeViewBD.SelectedNode.Parent.Text.Split('.')[0];
+                Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(text) == 0);
+                if (Relacion(ent))
+                {
+                    MessageBox.Show("Atributo con relacion");
+                    return;
+                }
                 if (!ddd.eliminaAtributo(n.Parent.Text, n.Index))
                     MessageBox.Show("Atributo no eliminado");
                 creArbol();
             }
+        }
+
+        private void modificarAtributoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode n = treeViewBD.SelectedNode;
+
+            if (n.Level == 2)
+            {
+                string text = treeViewBD.SelectedNode.Parent.Text.Split('.')[0];
+                Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(text) == 0);
+
+                if (Relacion(ent))
+                {
+                    MessageBox.Show("Atributo con relacion");
+                    return;
+                }
+                if (ent != null)
+                {
+                    Atributo aMod = ent.Atrib.Find(o=>o.sNombre.CompareTo(n.Text) == 0);
+                    if (aMod != null)
+                    {
+                        if(aMod.TipoIndice == 3 )
+                        {
+                            MessageBox.Show("Atributo con Llave secundaria");
+                            return;
+                        }
+                        using (NuevoAtributo nuevo = new NuevoAtributo(ent, ddd))
+                        {
+                            nuevo.modifica(aMod );
+                            if (nuevo.ShowDialog() == DialogResult.OK)
+                            {
+                                string nomb = nuevo.Nombre_atributo;
+                                if (nomb != "")
+                                {
+                                    while (nomb.Length < 30) nomb += ' ';
+                                    aMod.Nombre = nomb.ToCharArray(0, 30);
+                                }
+                                aMod.Tipo = (nuevo.Tipo == 0) ? 'C' : 'E';
+                                aMod.Longitud = nuevo.Long;
+                                aMod.TipoIndice = nuevo.TipoIndex;
+                                ddd.sobreescribAtributo(aMod);
+                                //AtribEnt(ent);
+                                creArbol();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void nuevoRegistroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string n = treeViewBD.SelectedNode.Text.Split('.')[0];
+            Entidad entidad = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
+            ArchivoRegistros archivo = new ArchivoRegistros(Path +'\\' + entidad.shortName + ".dat", entidad);
+            
+            AltaRegistros alta = new AltaRegistros(entidad, archivo);
+            alta.actualizado += new AltaRegistros.Actualiza(actualiza);
+            alta.ShowDialog();
+        }
+
+        private void actualiza()
+        {
+            vr.Actualiza();
+            ddd.sobreescribe_archivo();
+            
+        }
+        private bool hayregistros(Entidad e)
+        {
+            if (e.Dir_Datos == -1)
+                return false;
+            return true;
         }
     }
 }

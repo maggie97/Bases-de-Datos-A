@@ -108,6 +108,7 @@ namespace BDA
                 //Indice(1);
                 reg = new string[lenght + 2];
                 dgEntidad.Rows.Clear();
+                ((ArchivoRegistros)a).sobreescribirArch();
                 actualizado();
             }
         }

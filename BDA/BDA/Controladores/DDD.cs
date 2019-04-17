@@ -282,6 +282,7 @@ namespace BDA
                 writer.Write(e.Dir_sig);
             }
         }
+
         #endregion
         public void sobreescribe_archivo()
         {
@@ -294,14 +295,16 @@ namespace BDA
                     sobreescribAtributo((Atributo)o);
             }
         }
+
         #region atributos
         public void nuevoAtributo(string nombre, int tipo, int longi,Entidad e, int TipoIndice, Atributo referencia)
         {
             long index = -1;
             if (referencia != null) index = referencia.DirAtributo;
             Atributo nuevo = new Atributo(nombre, Longitud, tipo, longi, TipoIndice, index, -1);
+
             e.nuevoA(nuevo);
-            //guardaAtrib(nuevo);
+            
             obj.Add(nuevo);
             ordena();
             sobreescribe_archivo();

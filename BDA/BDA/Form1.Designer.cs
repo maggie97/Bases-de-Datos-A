@@ -58,6 +58,8 @@
             this.contextAtributo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.eliminarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevoRegistroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextTabla.SuspendLayout();
             this.contextItem.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -77,12 +79,13 @@
             this.contextTabla.BackColor = System.Drawing.SystemColors.ControlLight;
             this.contextTabla.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nuevoAtributoToolStripMenuItem,
+            this.nuevoRegistroToolStripMenuItem,
             this.toolStripSeparator2,
             this.eliminarTablaToolStripMenuItem,
             this.modifiicarTablaToolStripMenuItem});
             this.contextTabla.Name = "contextTabla";
             this.contextTabla.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextTabla.Size = new System.Drawing.Size(157, 76);
+            this.contextTabla.Size = new System.Drawing.Size(181, 120);
             // 
             // nuevoAtributoToolStripMenuItem
             // 
@@ -292,7 +295,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.archivoToolStripMenuItem});
+            this.archivoToolStripMenuItem,
+            this.registrosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(798, 24);
@@ -328,7 +332,7 @@
             this.eliminarAtributoToolStripMenuItem,
             this.modificarAtributoToolStripMenuItem});
             this.contextAtributo.Name = "contextAtributo";
-            this.contextAtributo.Size = new System.Drawing.Size(181, 70);
+            this.contextAtributo.Size = new System.Drawing.Size(173, 48);
             // 
             // eliminarAtributoToolStripMenuItem
             // 
@@ -342,6 +346,20 @@
             this.modificarAtributoToolStripMenuItem.Name = "modificarAtributoToolStripMenuItem";
             this.modificarAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.modificarAtributoToolStripMenuItem.Text = "Modificar Atributo";
+            this.modificarAtributoToolStripMenuItem.Click += new System.EventHandler(this.modificarAtributoToolStripMenuItem_Click);
+            // 
+            // registrosToolStripMenuItem
+            // 
+            this.registrosToolStripMenuItem.Name = "registrosToolStripMenuItem";
+            this.registrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.registrosToolStripMenuItem.Text = "Registros";
+            // 
+            // nuevoRegistroToolStripMenuItem
+            // 
+            this.nuevoRegistroToolStripMenuItem.Name = "nuevoRegistroToolStripMenuItem";
+            this.nuevoRegistroToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nuevoRegistroToolStripMenuItem.Text = "Nuevo Registro ";
+            this.nuevoRegistroToolStripMenuItem.Click += new System.EventHandler(this.nuevoRegistroToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -402,6 +420,8 @@
         private System.Windows.Forms.ContextMenuStrip contextAtributo;
         private System.Windows.Forms.ToolStripMenuItem eliminarAtributoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificarAtributoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nuevoRegistroToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem registrosToolStripMenuItem;
     }
 }
 
