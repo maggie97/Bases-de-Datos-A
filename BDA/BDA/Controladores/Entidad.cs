@@ -17,7 +17,7 @@ namespace BDA
         List<Atributo> atrib;
         List<List<string>> registros;
 
-        int cve_busqeda = -1;
+        //int cve_busqeda = -1;
         Primario prim;
         List<Secundario> sec;
 
@@ -91,17 +91,39 @@ namespace BDA
         public Primario Prim { get => prim; set => prim = value; }
         internal List<Secundario> Sec { get => sec; set => sec = value; }
 
-        internal void nuevoReg(List<string> atributos)
+        internal bool nuevoReg(List<string> atributos)
         {
+            bool res = false;
             if (Registros == null || Registros.Count == 0)
             {
                 registros = new List<List<string>>();
+                registros.Add(atributos);
                 
+                res = true;
             }
-            registros.Add(atributos);
+            
             if (prim != null)
             {
-                prim.inserta(atributos[prim.index + 1], Convert.ToInt64(atributos[0]));
+                res = true;
+                for(int i = 0; i< registros.Count; i++)//foreach(List<string> r in registros)
+                {
+                    var r = registros[i];
+                    if (r[prim.index + 1] == atributos[prim.index + 1])
+                    {
+                        res = false;
+                        break;
+                    }
+                }
+                if (res)
+                {
+                    registros.Add(atributos);
+                    prim.inserta(atributos[prim.index + 1], Convert.ToInt64(atributos[0]));
+                }
+            }
+            else
+            {
+                registros.Add(atributos);
+                res = true;
             }
             if(sec != null)
             {
@@ -111,6 +133,7 @@ namespace BDA
                 }
             }
             ordenaReg();
+            return res;
         }
         public void Indice(string Ruta)
         {
@@ -123,7 +146,7 @@ namespace BDA
             if( (a = Atrib.Find(o => o.TipoIndice == 2)) != null){
                 if (a.Ind == null)
                 {
-                    a.Ind = new Primario(a, (a.Tipo == 'C'), sNombre, Atrib.IndexOf(a), a.Longitud);
+                    a.Ind = new Primario(a, (a.Tipo == 'C'), Ruta+ '\\'+sNombre, Atrib.IndexOf(a), a.Longitud);
                 }
                 prim = (Primario)a.Ind;
             }

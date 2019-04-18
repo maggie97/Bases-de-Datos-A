@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace BDA
 {
@@ -47,9 +48,9 @@ namespace BDA
                         }
                         else
                         {
-                            //if (reg[i].Contains("/t")) reg[i].Replace("/t", "");
+                            if (reg[i].Contains("/t") || reg[i].Contains("O")) reg[i].Replace("/t", "");
                             while (reg[i].Length < entidad.Atrib[i - 1].Longitud ) { reg[i] += " "; }
-                            string val = reg[i].Substring(0, entidad.Atrib[i - 1].Longitud -1 );
+                            string val = reg[i].Substring(0, entidad.Atrib[i - 1].Longitud);
                             writer.Write(val);
                         }
                     }
@@ -75,13 +76,14 @@ namespace BDA
                         {
                             if (atrib.Tipo == 'C')
                             {
-                                var a = reader.ReadChars(atrib.Longitud);
+                                var a = reader.ReadChars(atrib.Longitud + 1);
                                 string s = "";
                                 List<char> aux = a.ToList();
-                                while (aux.First() == '\t' || aux.First() == '\u0003' || aux.First() == '\u0013')
-                                {
-                                    aux.RemoveAt(0);
-                                }
+                                aux.RemoveAt(0);
+                                //while (aux.First() == '\t' || aux.First() == '\u0003' || aux.First() == '\u0013')
+                                //{
+                                //    aux.RemoveAt(0);
+                                //}
                                 if (a[0] != '\t' && a[0] != '\u0013'  && a[0] != '"')
                                     foreach (char c in aux) { s += c; }
                                 else

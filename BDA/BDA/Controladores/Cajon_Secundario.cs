@@ -14,7 +14,7 @@ namespace BDA.Controladores
         int tam_Campo;
         List<Elemento> elementos;
         List<long> ap;
-        Atributo atrib;
+        //Atributo atrib;
         long sig = -1;
         int tope = 0;
         int bit = 0;

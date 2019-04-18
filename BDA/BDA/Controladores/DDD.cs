@@ -28,60 +28,6 @@ namespace BDA
 
         }
         
-        public new void lee()
-        {
-            using (BinaryReader reader = new BinaryReader(File.Open(base.Fullname, FileMode.Open)))
-            {
-                cab = reader.ReadInt64();
-                Console.WriteLine(cab); 
-                try
-                {
-                    Console.WriteLine(reader.PeekChar());
-                    while (reader.PeekChar() != -1)
-                    {
-                        string nomb = "";
-                        long dir;
-                        char[] nombre = reader.ReadChars(30);
-                        foreach (char n in nombre) 
-                            nomb += n;
-                        dir = reader.ReadInt64();
-                        Console.WriteLine(reader.PeekChar()); 
-                        if (reader.PeekChar() >= 70 || reader.PeekChar()<60)
-                        {
-                            list_insercion.Add(leeEntidad(reader, nomb, dir));
-                            //list_entidades.Add(list_insercion.Last());
-                            obj.Add(list_insercion.Last());
-                        }
-                        else
-                        {
-                            Atributo n = leeAtributo(reader, nomb, Convert.ToInt64(dir));
-                            foreach (Entidad ent in list_insercion)
-                            {
-                                obj.Add(n);
-                                if(ent.Dir_Entidad != -1)
-                                {
-                                    if (ent.Dir_Atributos == n.DirAtributo)
-                                        ent.Atrib.Add(n);
-                                    else
-                                        foreach (Atributo a in ent.Atrib)
-                                        {
-                                            if (a.DirSig == n.DirAtributo)
-                                            {
-                                                ent.Atrib.Add(n);
-                                                break;
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                        
-                    }
-                    
-                }
-                catch (Exception  e){ }
-                entidades(cab);
-            }
-        }
         public  void lee_()
         {
             leeCab();
@@ -134,7 +80,7 @@ namespace BDA
 
 
                 }
-                catch (Exception e) { }
+                catch { }
             }
         }
         public void entidades(long ap)
@@ -390,7 +336,7 @@ namespace BDA
             sobreescribe_archivo();
             return true;
             
-            return false;
+            //return false;
             
         }
         #endregion

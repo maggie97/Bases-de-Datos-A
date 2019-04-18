@@ -14,7 +14,7 @@ namespace BDA
     {
         DDD diccionario;
         Entidad entidad;
-        Entidad rel;
+        //Entidad rel;
         string[] s = { "Sin Llave", "Llave Primaria", "Llave Foranea" };
         public NuevoAtributo(Entidad entidad, DDD dic)
         {

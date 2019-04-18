@@ -15,16 +15,17 @@ namespace BDA.Controladores
         long[] ap;//apuntadores del registro 
         int longitud = 0;//cantidad  de registros que puede almacenar 
         public char c = '\0';
-        Index op;
-
+        //Index op;
+        int numero ;
         //crea el bloque principal del indice primario
         public Cajon_Primario(int op)
         {
-            this.op = Index.Primario_Principal;
+            //this.op = Index.Primario_Principal;
             longitud = (op == 0) ? 26 : (op == 1)? 9: 0;
             ind =  new char[longitud]; 
             ap = new long[longitud];
             int inicia = (op == 1) ? 49 : 65;
+            numero = op;
             for (int i = 0;i< longitud; i ++)
             {
                 ind[i] = Convert.ToChar(inicia);
@@ -35,6 +36,7 @@ namespace BDA.Controladores
         //crea el bloque que se enlaza con el bloque principal (todo vacio)
         public Cajon_Primario(Atributo a)
         {
+            numero = (a.Tipo != 'C')? 0: (a.Tipo == 'E')? 1: 2;
             if (a.TipoIndice == 2)
             {
                 creaBloqPrimario(a.Longitud, (a.Tipo == 'C'));
@@ -49,7 +51,7 @@ namespace BDA.Controladores
         }
         public void creaBloqPrimario(int long_clave, bool cadena)
         {
-            this.op = Index.Primario_Cajon;
+            //this.op = Index.Primario_Cajon;
             longitud = 50;
             cv = new List<List<char>>();
             cb = new string[longitud];
@@ -74,10 +76,21 @@ namespace BDA.Controladores
                 if (ap[i] == -1)//cb[i].Contains("aux" ))
                 {
                     string s = claveBusq;
-                    while (s.Length < cb[i].Length) s += " ";
-                    cb[i] = s;
-                    ap[i] = apuntador;
-                    break;
+                    if (numero > 0)
+                    {
+                        int n = Convert.ToInt32(claveBusq);
+                    }
+                    else
+                    {
+                        while (s.Length < cb[i].Length) s += " ";
+                    }
+                    //if (cb.ToList().Find(o => o.CompareTo(claveBusq) == 0) != null)
+                    {
+                        cb[i] = s;
+                        ap[i] = apuntador;
+                        break;
+                    }
+
                 }
                 i++;
             }

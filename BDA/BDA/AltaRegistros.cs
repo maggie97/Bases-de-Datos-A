@@ -104,7 +104,8 @@ namespace BDA
                 regAct = dgEntidad.CurrentRow.Index;
                 reg[lenght + 1] = "-1" ;
                 reg[0] = DirReg.ToString();
-                ent.nuevoReg(UltimoReg);
+                if (!ent.nuevoReg(UltimoReg))
+                    MessageBox.Show("No se añadio el registro");
                 //Indice(1);
                 reg = new string[lenght + 2];
                 dgEntidad.Rows.Clear();

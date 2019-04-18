@@ -10,7 +10,6 @@ C:\Users\Maggie\source\repos\BDA\BDA\bin\Debug\Bunifu_UI_v1.5.3.dll
 C:\Users\Maggie\source\repos\BDA\BDA\obj\Debug\BDA.csproj.CopyComplete
 C:\Users\Maggie\source\repos\BDA\BDA\obj\Debug\BDA.exe
 C:\Users\Maggie\source\repos\BDA\BDA\obj\Debug\BDA.pdb
-C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.csprojAssemblyReference.cache
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.Form1.resources
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.Properties.Resources.resources
 C:\Users\Maggie\Desktop\Bases-de-Datos-A\BDA\BDA\obj\Debug\BDA.csproj.GenerateResource.cache

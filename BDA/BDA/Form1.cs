@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace BDA
 {
-    
+
     public partial class Form1 : Form
     {
         private string Path;
@@ -52,10 +52,10 @@ namespace BDA
             treeViewBD.Nodes.Clear();
             if (!Directory.Exists(Path)) return;
             DirectoryInfo directory = new DirectoryInfo(Path);
-            
+
             TreeNode root = new TreeNode(nomb);
             root.ContextMenuStrip = contextItem;
-            TreeNode n1 = null;           
+            TreeNode n1 = null;
             foreach (Entidad e in ddd.EntidadesOrden)
             {
                 if (!File.Exists(Path + '\\' + e.shortName + ".dat"))
@@ -103,7 +103,7 @@ namespace BDA
             root.ContextMenuStrip = contextItem;
             foreach (Entidad e in ddd.EntidadesOrden)
             {
-                if(!File.Exists(Path + '\\'+ e.shortName + ".dat"))
+                if (!File.Exists(Path + '\\' + e.shortName + ".dat"))
                 {
                     Archivo n = new Archivo(e.shortName, ".dat", Path);
                 }
@@ -131,7 +131,7 @@ namespace BDA
                 root.Nodes.Add(node);
                 treeViewBD.ExpandAll();
                 if (n1 == null) n1 = node;
-            } 
+            }
 
             List<TreeNode> tree = new List<TreeNode>();
             tree.Add(root);
@@ -162,7 +162,7 @@ namespace BDA
         }
         #endregion
 
-        
+
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             abrirDD();
@@ -172,13 +172,13 @@ namespace BDA
         {
             nuevoDD();
         }
-        
+
         private void eliminarBDToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Directory.Exists(Path))
             {
                 //eliminar los arcchivos de la carpeta 
-                if(MessageBox.Show("¿Estas seguro que deseas eliminar la Base de Datos?", "Eliminar Base de Datos", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false ) == DialogResult.OK)
+                if (MessageBox.Show("¿Estas seguro que deseas eliminar la Base de Datos?", "Eliminar Base de Datos", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false) == DialogResult.OK)
                 {
                     DirectoryInfo directory = new DirectoryInfo(Path);
                     foreach (FileInfo file in directory.GetFiles())
@@ -191,15 +191,15 @@ namespace BDA
                 }
             }
         }
-        
+
         private void cambiarNombreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string aux = Path.Substring(0, Path.LastIndexOf('\\'));
             string res = Microsoft.VisualBasic.Interaction.InputBox("Nombre de la BD", "Cambiar nombre", nombreBD);
 
             File.Move(Path + '\\' + nombreBD + ".dd", Path + '\\' + res + ".dd");
-            Directory.Move(Path , aux + '\\'+ res);
-            
+            Directory.Move(Path, aux + '\\' + res);
+
             Path = aux + '\\' + res;
             nombreBD = res;
             ddd.Fullname = Path + '\\' + nombreBD + ".dd";
@@ -210,13 +210,13 @@ namespace BDA
         private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NuevaTabla nueva = new NuevaTabla();
-            if(nueva.ShowDialog() == DialogResult.OK)
+            if (nueva.ShowDialog() == DialogResult.OK)
             {
                 if (!File.Exists(Path + '\\' + nueva.Nombre_Entidad + ".dat"))
                 {
                     ddd.nuevaEntidad(nueva.Nombre_Entidad);
                     ddd.sobreescribe_archivo();
-                    Archivo n = new Archivo(  nueva.Nombre_Entidad, ".dat", Path );
+                    Archivo n = new Archivo(nueva.Nombre_Entidad, ".dat", Path);
                     creArbol();
                 }
                 else
@@ -226,7 +226,7 @@ namespace BDA
 
         private void treeViewBD_MouseClick(object sender, MouseEventArgs e)
         {
-            
+
         }
 
         private void treeViewBD_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -247,13 +247,13 @@ namespace BDA
             string aux = treeViewBD.SelectedNode.Text;
             Entidad ent = ddd.EntidadesOrden.Find(o => o.sNombre.Contains(aux));
             //ArchivoRegistros a = new ArchivoRegistros(Path + '\\' + aux + ".dat", ent);
-            
+
             if (Relacion(ent))
             {
                 MessageBox.Show("Tabla con relacion de FK");
                 return;
             }
-            if(MessageBox.Show("¿Estas seguro de eliminar esta tabla?", "Eliminar tabla", MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification ) == DialogResult.OK)
+            if (MessageBox.Show("¿Estas seguro de eliminar esta tabla?", "Eliminar tabla", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification) == DialogResult.OK)
             {
                 elimina();
             }
@@ -268,7 +268,7 @@ namespace BDA
                 ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + ent.shortName + ".dat", ent);
                 vr.VerTabla(ent, archivo);
             }
-            
+
         }
         private bool elimina()
         {
@@ -288,7 +288,7 @@ namespace BDA
         }
         private bool nuevoAtributo()
         {
-            
+
             bool r = false;
             int i = treeViewBD.SelectedNode.Index;
             string name = treeViewBD.SelectedNode.Text;
@@ -299,7 +299,7 @@ namespace BDA
 
             if (nuevo.ShowDialog() == DialogResult.OK)
             {
-                long dir = -1;
+                //long dir = -1;
                 if (ent.AtributoExiste(nuevo.Nombre_atributo)) return false;
                 ddd.nuevoAtributo(nuevo.Nombre_atributo, nuevo.Tipo, nuevo.Long, ent, nuevo.TipoIndex, nuevo.Relacion);
                 ent.Indice(Path);
@@ -312,15 +312,15 @@ namespace BDA
         }
         private void treeViewBD_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            
+
         }
-       
+
 
         private void modifiicarTablaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string n = treeViewBD.SelectedNode.Text.Split('.')[0];
             Entidad eMod = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
-            if (Relacion(eMod)) 
+            if (Relacion(eMod))
             {
                 MessageBox.Show("Tabla con relacion a pk");
                 return;
@@ -336,7 +336,7 @@ namespace BDA
                     aux = nueva.Nombre_Entidad;
                     while (aux.Length < 30) aux += ' ';
                     eMod.NombreEntidad = aux.ToCharArray(0, 30);
-                    File.Move( Path + '\\' + name + ".dat", Path+'\\'+ nueva.Nombre_Entidad + ".dat");
+                    File.Move(Path + '\\' + name + ".dat", Path + '\\' + nueva.Nombre_Entidad + ".dat");
                 }
                 else
                     MessageBox.Show("Ya existe una tabla con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -357,12 +357,12 @@ namespace BDA
             return false;
 
         }
-        
+
         private void eliminarAtributoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode n = treeViewBD.SelectedNode;
-            
-            if(n.Level == 2)
+
+            if (n.Level == 2)
             {
                 string text = treeViewBD.SelectedNode.Parent.Text.Split('.')[0];
                 Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(text) == 0);
@@ -393,17 +393,17 @@ namespace BDA
                 }
                 if (ent != null)
                 {
-                    Atributo aMod = ent.Atrib.Find(o=>o.sNombre.CompareTo(n.Text) == 0);
+                    Atributo aMod = ent.Atrib.Find(o => o.sNombre.CompareTo(n.Text) == 0);
                     if (aMod != null)
                     {
-                        if(aMod.TipoIndice == 3 )
+                        if (aMod.TipoIndice == 3)
                         {
                             MessageBox.Show("Atributo con Llave secundaria");
                             return;
                         }
                         using (NuevoAtributo nuevo = new NuevoAtributo(ent, ddd))
                         {
-                            nuevo.modifica(aMod );
+                            nuevo.modifica(aMod);
                             if (nuevo.ShowDialog() == DialogResult.OK)
                             {
                                 string nomb = nuevo.Nombre_atributo;
@@ -429,8 +429,8 @@ namespace BDA
         {
             string n = treeViewBD.SelectedNode.Text.Split('.')[0];
             Entidad entidad = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
-            ArchivoRegistros archivo = new ArchivoRegistros(Path +'\\' + entidad.shortName + ".dat", entidad);
-            
+            ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + entidad.shortName + ".dat", entidad);
+
             AltaRegistros alta = new AltaRegistros(entidad, archivo);
             alta.actualizado += new AltaRegistros.Actualiza(actualiza);
             alta.ShowDialog();
@@ -440,7 +440,6 @@ namespace BDA
         {
             vr.Actualiza();
             ddd.sobreescribe_archivo();
-            
         }
         private bool hayregistros(Entidad e)
         {
