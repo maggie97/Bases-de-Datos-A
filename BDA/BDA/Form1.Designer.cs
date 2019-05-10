@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.contextTabla = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nuevoAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevoRegistroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.eliminarTablaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifiicarTablaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,11 +56,11 @@
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoAtributoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAtributo = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.eliminarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarAtributoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevoRegistroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextTabla.SuspendLayout();
             this.contextItem.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -85,31 +86,38 @@
             this.modifiicarTablaToolStripMenuItem});
             this.contextTabla.Name = "contextTabla";
             this.contextTabla.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextTabla.Size = new System.Drawing.Size(181, 120);
+            this.contextTabla.Size = new System.Drawing.Size(159, 98);
             // 
             // nuevoAtributoToolStripMenuItem
             // 
             this.nuevoAtributoToolStripMenuItem.Name = "nuevoAtributoToolStripMenuItem";
-            this.nuevoAtributoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.nuevoAtributoToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.nuevoAtributoToolStripMenuItem.Text = "Nuevo Atributo";
             this.nuevoAtributoToolStripMenuItem.Click += new System.EventHandler(this.nuevoAtributoToolStripMenuItem_Click);
+            // 
+            // nuevoRegistroToolStripMenuItem
+            // 
+            this.nuevoRegistroToolStripMenuItem.Name = "nuevoRegistroToolStripMenuItem";
+            this.nuevoRegistroToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.nuevoRegistroToolStripMenuItem.Text = "Nuevo Registro ";
+            this.nuevoRegistroToolStripMenuItem.Click += new System.EventHandler(this.nuevoRegistroToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
             // 
             // eliminarTablaToolStripMenuItem
             // 
             this.eliminarTablaToolStripMenuItem.Name = "eliminarTablaToolStripMenuItem";
-            this.eliminarTablaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.eliminarTablaToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.eliminarTablaToolStripMenuItem.Text = "Eliminar Tabla";
             this.eliminarTablaToolStripMenuItem.Click += new System.EventHandler(this.eliminarTablaToolStripMenuItem_Click);
             // 
             // modifiicarTablaToolStripMenuItem
             // 
             this.modifiicarTablaToolStripMenuItem.Name = "modifiicarTablaToolStripMenuItem";
-            this.modifiicarTablaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.modifiicarTablaToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.modifiicarTablaToolStripMenuItem.Text = "Modificar Tabla";
             this.modifiicarTablaToolStripMenuItem.Click += new System.EventHandler(this.modifiicarTablaToolStripMenuItem_Click);
             // 
@@ -296,7 +304,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
-            this.registrosToolStripMenuItem});
+            this.registrosToolStripMenuItem,
+            this.consultaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(798, 24);
@@ -326,6 +335,12 @@
             this.abrirBaseDeDatosToolStripMenuItem.Text = "Abrir Base de Datos";
             this.abrirBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
             // 
+            // registrosToolStripMenuItem
+            // 
+            this.registrosToolStripMenuItem.Name = "registrosToolStripMenuItem";
+            this.registrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.registrosToolStripMenuItem.Text = "Registros";
+            // 
             // contextAtributo
             // 
             this.contextAtributo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -337,29 +352,23 @@
             // eliminarAtributoToolStripMenuItem
             // 
             this.eliminarAtributoToolStripMenuItem.Name = "eliminarAtributoToolStripMenuItem";
-            this.eliminarAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.eliminarAtributoToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.eliminarAtributoToolStripMenuItem.Text = "Eliminar Atributo";
             this.eliminarAtributoToolStripMenuItem.Click += new System.EventHandler(this.eliminarAtributoToolStripMenuItem_Click);
             // 
             // modificarAtributoToolStripMenuItem
             // 
             this.modificarAtributoToolStripMenuItem.Name = "modificarAtributoToolStripMenuItem";
-            this.modificarAtributoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modificarAtributoToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.modificarAtributoToolStripMenuItem.Text = "Modificar Atributo";
             this.modificarAtributoToolStripMenuItem.Click += new System.EventHandler(this.modificarAtributoToolStripMenuItem_Click);
             // 
-            // registrosToolStripMenuItem
+            // consultaToolStripMenuItem
             // 
-            this.registrosToolStripMenuItem.Name = "registrosToolStripMenuItem";
-            this.registrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.registrosToolStripMenuItem.Text = "Registros";
-            // 
-            // nuevoRegistroToolStripMenuItem
-            // 
-            this.nuevoRegistroToolStripMenuItem.Name = "nuevoRegistroToolStripMenuItem";
-            this.nuevoRegistroToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nuevoRegistroToolStripMenuItem.Text = "Nuevo Registro ";
-            this.nuevoRegistroToolStripMenuItem.Click += new System.EventHandler(this.nuevoRegistroToolStripMenuItem_Click);
+            this.consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
+            this.consultaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.consultaToolStripMenuItem.Text = "Consulta";
+            this.consultaToolStripMenuItem.Click += new System.EventHandler(this.consultaToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -422,6 +431,7 @@
         private System.Windows.Forms.ToolStripMenuItem modificarAtributoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nuevoRegistroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
     }
 }
 

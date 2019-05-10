@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BDA.Controladores;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -11,11 +12,15 @@ namespace BDA
         private string Path;
         private string nombreBD;
         private VRegistro vr;
+        private bool db;
 
         DDD ddd;
+        private string consulta;
+
         public Form1()
         {
             InitializeComponent();
+            db = false;
             vr = new VRegistro();
             vr.TopLevel = false;
             vr.Dock = DockStyle.Fill;
@@ -43,6 +48,7 @@ namespace BDA
                     Path = Path.Substring(0, Path.LastIndexOf('\\'));
                     string n = Path.Substring(Path.LastIndexOf('\\') + 1);
                     creArbol(n);
+                    db = true;
                 }
             }
         }
@@ -447,5 +453,16 @@ namespace BDA
                 return false;
             return true;
         }
+
+        private void consultaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (db == true)
+            {
+                consulta = Microsoft.VisualBasic.Interaction.InputBox("Consulta", "Consulta", "");
+                Consulta x = new Consulta(consulta, ddd);
+                vr.VerTabla(x.tablaOut);
+            }
+        }
     }
 }
+

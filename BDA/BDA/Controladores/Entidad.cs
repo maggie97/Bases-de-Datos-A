@@ -36,7 +36,12 @@ namespace BDA
             this.dir_Datos = dir_Datos;
             atrib = new List<Atributo>();
             registros = new List<List<string>>();
-        } 
+        }
+        public Entidad( List<Atributo> atributos, List<List<string>> r)
+        {
+            atrib = atributos;
+            registros = r;
+        }
         public Entidad(char[] nombreEntidad, long dir_Entidad, long dir_Atributos, long dir_Datos, long dir_Sig)
         {
             //this.nombreEntidad = nombreEntidad;

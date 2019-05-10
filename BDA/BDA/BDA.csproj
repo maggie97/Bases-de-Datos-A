@@ -90,6 +90,7 @@
     <Compile Include="Controladores\Atributo.cs" />
     <Compile Include="Controladores\Cajon_Primario.cs" />
     <Compile Include="Controladores\Cajon_Secundario.cs" />
+    <Compile Include="Controladores\Consulta.cs" />
     <Compile Include="Controladores\DDD.cs" />
     <Compile Include="Controladores\Entidad.cs" />
     <Compile Include="Controladores\Indice.cs" />
