@@ -13,6 +13,7 @@ namespace BDA
         private string nombreBD;
         private VRegistro vr;
         private bool db;
+        ArchivoRegistros archivo;
 
         DDD ddd;
         private string consulta;
@@ -21,7 +22,14 @@ namespace BDA
         {
             InitializeComponent();
             db = false;
+
             vr = new VRegistro();
+            vr.sobreescribe += new VRegistro.actualiza(actualizaReg);
+            vr.modificaReg += new VRegistro.modifica(modificaReg);
+            //vr.ShowDialog();
+
+
+            //  vr = new VRegistro();
             vr.TopLevel = false;
             vr.Dock = DockStyle.Fill;
             if (panelContenido.Controls.Count > 0)
@@ -30,6 +38,8 @@ namespace BDA
             panelContenido.Controls.Add(fh);
             panelContenido.Tag = fh;
             vr.Show();
+
+            
         }
 
         #region
@@ -49,6 +59,10 @@ namespace BDA
                     string n = Path.Substring(Path.LastIndexOf('\\') + 1);
                     creArbol(n);
                     db = true;
+                    foreach (var e in ddd.EntidadesOrden)
+                    {
+                        ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + e.shortName + ".dat", e);
+                    }
                 }
             }
         }
@@ -271,7 +285,7 @@ namespace BDA
             {
                 string name = treeViewBD.SelectedNode.Text.Split('.')[0];
                 Entidad ent = ddd.EntidadesOrden.Find(o => o.sNombre.Contains(name));
-                ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + ent.shortName + ".dat", ent);
+                archivo = new ArchivoRegistros(Path + '\\' + ent.shortName + ".dat", ent);
                 vr.VerTabla(ent, archivo);
             }
 
@@ -315,6 +329,20 @@ namespace BDA
                 r = true;
             }
             return r;
+        }
+        private void actualizaReg()
+        {
+            archivo.sobreescribirArch();
+            actualiza();
+        }
+        private void modificaReg()
+        {
+            AltaRegistros alta = new AltaRegistros(vr.E, archivo, vr.E.Registros[vr.Actual], ddd);
+            alta.actualizado += new AltaRegistros.Actualiza(actualizaReg);
+            //alta.Integridad += new AltaRegistros.Foranea(integridadReferencial);
+            alta.ShowDialog();
+            //archivo.sobreescribirArch();
+            //actualiza();
         }
         private void treeViewBD_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
@@ -437,14 +465,17 @@ namespace BDA
             Entidad entidad = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(n) == 0);
             ArchivoRegistros archivo = new ArchivoRegistros(Path + '\\' + entidad.shortName + ".dat", entidad);
 
-            AltaRegistros alta = new AltaRegistros(entidad, archivo);
+            AltaRegistros alta = new AltaRegistros(entidad, archivo, ddd);
             alta.actualizado += new AltaRegistros.Actualiza(actualiza);
+            //alta.Integridad += new AltaRegistros.Foranea(integridadReferencial);
             alta.ShowDialog();
         }
 
+        
+
         private void actualiza()
         {
-            vr.Actualiza();
+            vr.Actualizar();
             ddd.sobreescribe_archivo();
         }
         private bool hayregistros(Entidad e)
@@ -456,11 +487,22 @@ namespace BDA
 
         private void consultaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (db == true)
+            try
             {
-                consulta = Microsoft.VisualBasic.Interaction.InputBox("Consulta", "Consulta", "");
-                Consulta x = new Consulta(consulta, ddd);
-                vr.VerTabla(x.tablaOut);
+                if (db == true)
+                {
+                    consulta = Microsoft.VisualBasic.Interaction.InputBox("Consulta", "Consulta", "");
+                    Consulta x = new Consulta(consulta, ddd);
+                    if (x.error == "" && x != null && x.tablaOut != null)
+                        vr.VerTabla(x.tablaOut);
+                    else
+                        MessageBox.Show(x.error);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }

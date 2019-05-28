@@ -16,7 +16,7 @@ namespace BDA
         long dir_sig = -1;
         List<Atributo> atrib;
         List<List<string>> registros;
-
+        
         //int cve_busqeda = -1;
         Primario prim;
         List<Secundario> sec;
@@ -130,13 +130,13 @@ namespace BDA
                 registros.Add(atributos);
                 res = true;
             }
-            if(sec != null)
-            {
-                foreach(var s in sec)
-                {
-                    s.insertaEscribe(atributos[s.index + 1], Convert.ToInt64(atributos[0]));
-                }
-            }
+            //if(sec != null)
+            //{
+            //    foreach(var s in sec)
+            //    {
+            //        s.insertaEscribe(atributos[s.index + 1], Convert.ToInt64(atributos[0]));
+            //    }
+            //}
             ordenaReg();
             return res;
         }
@@ -155,18 +155,47 @@ namespace BDA
                 }
                 prim = (Primario)a.Ind;
             }
-            if((a = Atrib.Find(o => o.TipoIndice == 3)) != null)
+            var muchos =  Atrib.FindAll(o => o.TipoIndice == 3);
+            if(muchos != null)
+                foreach(var atributo in muchos )
+                {
+                    if (atributo.Ind == null)
+                    {
+                        int i = 0;
+                        if (sec == null) sec = new List<Secundario>();
+                        i = sec.FindIndex(o => o.Atributo.sNombre == sNombre);
+
+                        if (i < 0)
+                            atributo.Ind = new Secundario(atributo, Ruta, sNombre, Atrib.IndexOf(atributo));
+                        if (atributo.Ind != null)
+                            sec.Add((Secundario)atributo.Ind);
+                    }
+                    else if (sec.FindIndex(o => o.Atributo.sNombre.Contains(atributo.Ind.Atributo.sNombre)) < 0)
+                        sec.Add((Secundario)atributo.Ind);
+                }
+            /*if ((a = Atrib.Find(o => o.TipoIndice == 3)) != null)
             {
                 if(a.Ind == null)
                 {
+                    //if (sec == null) sec = new List<Secundario>();
+                    //if (sec.FindIndex(o => o.Atributo == a) < 0)                    
+                        //a.Ind = new Secundario(a, Ruta, sNombre, Atrib.IndexOf(a));
+
+                    
+                    int i = 0;
                     if (sec == null) sec = new List<Secundario>();
-                    if (sec.FindIndex(o => o.Atributo == a) < 0)
-                    {
+                    i = sec.FindIndex(o => o.Atributo.sNombre == sNombre);
+                    //if ((i = sec.FindIndex(o => o.Atributo.sNombre == sNombre)) > 0)
+                    //    a.Ind = sec[i];
+                    //else 
+                    if (i < 0)
                         a.Ind = new Secundario(a, Ruta, sNombre, Atrib.IndexOf(a));
-                    }
+                    if (a.Ind != null)
+                        sec.Add((Secundario)a.Ind);
                 }
-                sec.Add((Secundario)a.Ind);
-            }
+                else if (sec.FindIndex(o => o.Atributo.sNombre.Contains(a.Ind.Atributo.sNombre)) < 0)
+                    sec.Add((Secundario)a.Ind);*/
+            
             
         }
         public void ordenaReg()
@@ -208,6 +237,9 @@ namespace BDA
         }
         public void EliminaRegistro(List<string> reg)
         {
+            
+            if(dir_Datos == Convert.ToInt64(reg.First()))
+                dir_Datos = Convert.ToInt64(reg.Last());
             Registros.Remove(reg);
             if (prim != null)
             {
@@ -221,7 +253,7 @@ namespace BDA
                 {
                     var dat = reg[s.index + 1];
                     dat = dat.Substring(dat.LastIndexOf('\u001d') + 1 );
-                    s.elimina(dat, Int64.Parse(reg[0]));
+                    //s.elimina(dat, Int64.Parse(reg[0]));
                 }
             }
 

@@ -12,8 +12,19 @@ namespace BDA
 {
     public partial class VRegistro : Form
     {
+        public event actualiza sobreescribe;
+        public delegate void actualiza();
+
+        public event modifica modificaReg;
+        public delegate void modifica();
+
         Entidad e;
         ArchivoRegistros a;
+        int actual = -1;
+
+        public Entidad E { get => e; set => e = value; }
+        public int Actual { get => actual; set => actual = value; }
+
         public VRegistro()
         {
             InitializeComponent();
@@ -23,7 +34,7 @@ namespace BDA
         {
             e = entidad;
             a = (ArchivoRegistros)arch;
-            Actualiza();
+            Actualizar();
             
         }
         public void VerTabla(Entidad entidad)
@@ -46,23 +57,70 @@ namespace BDA
                 dgTabla.Rows.Add(r);
             }
         }
-        public void Actualiza()
+        public void Actualizar()
         {
             dgTabla.Columns.Clear();
+            dgTabla.Rows.Clear();
             foreach (Atributo a in e.Atrib)
             {
                 dgTabla.Columns.Add("col" + a.sNombre, a.sNombre);
             }
-            dgTabla.Rows.Clear();
+            //dgTabla.Rows.Clear();
             if (e.Dir_Datos == -1) return;
             else a.leerArch(e.Dir_Datos);
             foreach (List<string> reg in e.Registros)
             {
-                string[] except = { reg.First(), reg.Last() };
-                string[] r = reg.Except(except).ToArray();
-                dgTabla.Rows.Add(r);
+                //string[] except = { reg.First(), reg.Last() };
+                //string[] r = reg.Except(except).ToArray();
+                var r = reg.GetRange(1, reg.Count - 2);
+                dgTabla.Rows.Add(r.ToArray());
             }
             
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void eliminarRegistroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = MessageBox.Show("Eliminar Registro", "Estas seguro de eliminar el registro", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            if(dialog == DialogResult.OK)
+            {
+                MessageBox.Show("", this.e.Registros[actual][0]);
+                //this.e.Registros.RemoveAt(actual);
+                this.e.EliminaRegistro(this.e.Registros[actual]);
+                //actualizar el archivo
+                sobreescribe();
+            }
+        }
+
+        private void dgTabla_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //MessageBox.Show(e.ToString());
+        }
+
+        private void dgTabla_CellClick(object sender, DataGridViewCellEventArgs en)
+        {
+            int index = en.RowIndex;
+
+            //e.Registros.RemoveAt(index);
+        }
+
+        private void dgTabla_CellMouseDown(object sender, DataGridViewCellMouseEventArgs en)
+        {
+            
+            actual = en.RowIndex;
+            //MessageBox.Show(actual.ToString());
+        }
+
+        private void modificaRegistroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (actual != -1)
+            {
+                modificaReg();
+            }
         }
     }
 }

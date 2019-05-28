@@ -12,8 +12,9 @@ namespace BDA.Controladores
         List<Cajon_Secundario> principal;
         int capacidad = 100;
         int tope = 0;
-        public Secundario(Atributo atributoAct, string path, string nombre, int i): base (path + '\\'+ nombre, i, atributoAct)
+        public Secundario( Atributo atributoAct, string path, string nombre, int i): base (path + '\\'+ nombre, i, atributoAct)
         {
+           
             /*if(!File.Exists(nombre + ".idx"))
             {
                 nuevoArch();
@@ -75,7 +76,10 @@ namespace BDA.Controladores
         {
             Cajon_Secundario c = null;
             long dir = -1;
-            while (cb.Length < principal[0].Elementos.Last().Cb.Length) cb += " ";
+
+            //revisar integridad 
+
+           /* while (cb.Length < principal[0].Elementos.Last().Cb.Length) cb += " ";
             if (tope < capacidad)
             {
                 if (tope == 0 )
@@ -110,7 +114,7 @@ namespace BDA.Controladores
             else
             {
 
-            }
+            }*/
             return new object[] { c, dir};
         }
         public void elimina(string dato, long reg)

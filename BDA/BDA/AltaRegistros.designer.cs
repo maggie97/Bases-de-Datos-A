@@ -46,6 +46,7 @@
             this.dgEntidad.Size = new System.Drawing.Size(379, 80);
             this.dgEntidad.TabIndex = 0;
             this.dgEntidad.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntidad_CellEndEdit);
+            this.dgEntidad.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntidad_CellValueChanged);
             this.dgEntidad.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntidad_RowLeave);
             // 
             // btnAceptar
