@@ -419,22 +419,22 @@ namespace BDA
             {
                 string text = treeViewBD.SelectedNode.Parent.Text.Split('.')[0];
                 Entidad ent = ddd.EntidadesOrden.Find(o => o.shortName.CompareTo(text) == 0);
-
-                if (Relacion(ent))
-                {
-                    MessageBox.Show("Atributo con relacion");
-                    return;
-                }
+                if (ent.Registros == null || ent.Registros.Count == 0) return;
+                //if (Relacion(ent))
+                //{
+                //    MessageBox.Show("Atributo con relacion");
+                //    return;
+                //}
                 if (ent != null)
                 {
                     Atributo aMod = ent.Atrib.Find(o => o.sNombre.CompareTo(n.Text) == 0);
                     if (aMod != null)
                     {
-                        if (aMod.TipoIndice == 3)
-                        {
-                            MessageBox.Show("Atributo con Llave secundaria");
-                            return;
-                        }
+                        //if (aMod.TipoIndice == 3)
+                        //{
+                        //    MessageBox.Show("Atributo con Llave secundaria");
+                        //    return;
+                        //}
                         using (NuevoAtributo nuevo = new NuevoAtributo(ent, ddd))
                         {
                             nuevo.modifica(aMod);
@@ -446,9 +446,10 @@ namespace BDA
                                     while (nomb.Length < 30) nomb += ' ';
                                     aMod.Nombre = nomb.ToCharArray(0, 30);
                                 }
-                                aMod.Tipo = (nuevo.Tipo == 0) ? 'C' : 'E';
+                                aMod.Tipo = (nuevo.Tipo == 1) ? 'C' : 'E';
+                                
                                 aMod.Longitud = nuevo.Long;
-                                aMod.TipoIndice = nuevo.TipoIndex;
+                                aMod.TipoIndice = nuevo.TipoIndex;                                
                                 ddd.sobreescribAtributo(aMod);
                                 //AtribEnt(ent);
                                 creArbol();

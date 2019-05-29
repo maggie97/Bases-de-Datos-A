@@ -44,15 +44,15 @@ namespace BDA
             cmbIndice.Items.Clear();
             cmbIndice.Items.AddRange(s);
             cmbIndice.SelectedIndex = a.TipoIndice - 1;
-            if(a.TipoIndice == 2 || a.TipoIndice == 3)
-            {
-                cmbLlave.Enabled = false;
-                cmbIndice.Enabled = false;
-                num_Long.Enabled = false;
-                cmbTipo.Enabled = false;
-                txt_Nombre.Enabled = false;
-                num_Long.Enabled = false;
-            }
+            //if(a.TipoIndice == 2 || a.TipoIndice == 3)
+            //{
+            //    cmbLlave.Enabled = false;
+            //    cmbIndice.Enabled = false;
+            //    num_Long.Enabled = false;
+            //    cmbTipo.Enabled = false;
+            //    txt_Nombre.Enabled = false;
+            //    num_Long.Enabled = false;
+            //}
             if (a.TipoIndice == 3)
             {
                 Controladores.Secundario s = (Controladores.Secundario)(a.Ind);
